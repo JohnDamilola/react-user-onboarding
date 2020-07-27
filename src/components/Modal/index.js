@@ -44,10 +44,14 @@ const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props
                             <button className={styles['button-primary']} onClick={next}>Yes, show me</button>
                             <button className={styles['button-secondary']} onClick={onCloseAndReset}>Not right now</button>
                         </div>
-                        : <div className={styles['align-center']}>
-                            <button className={styles['button-secondary']} onClick={prev}>previous</button>
-                            <button className={styles['button-primary']} onClick={next}>next</button>
-                        </div>
+                        : index === (maxLength - 1) 
+                            ? <div className={styles['align-center']}>
+                                <button className={styles['button-primary']} onClick={onCloseAndReset}>End Tour</button>
+                            </div>
+                            : <div className={styles['align-center']}>
+                                <button className={styles['button-secondary']} onClick={prev}>previous</button>
+                                <button className={styles['button-primary']} onClick={next}>next</button>
+                            </div>
                     }
                 </div>
             </div>

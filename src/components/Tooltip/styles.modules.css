@@ -1,0 +1,117 @@
+.container {
+    /* position: relative; */
+    display: inline-flex;
+    user-select: none;
+    cursor: pointer;
+    margin: 0 10px;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.tooltipContent {
+    color: #fff;
+    position: absolute;
+    z-index: 10;
+    padding: 12px;
+    font-size: 12px;
+    width: 300px;
+    /* margin-top: 15px; */
+    cursor: default;
+    border-radius: 3px;
+    line-height: 20px;
+    font-family: monospace;
+    background-color: #212529;
+    box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.16);
+    animation: fadeIn ease-in-out 0.65s;
+}
+.tooltipContent.sm {
+    max-width: 23rem;
+}
+.tooltipContent.md {
+    max-width: 40rem;
+}
+.arrow {
+    position: absolute;
+    width: 0;
+    height: 0;
+}
+.top {
+    bottom: calc(100% + 18px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+.top .arrow {
+    bottom: -8px;
+    left: calc(50% - 10px);
+    border-right: 10px solid transparent;
+    border-top: 10px solid #212529;
+    border-left: 10px solid transparent;
+}
+.right, .left {
+    /* top: 10%; */
+    /* transform: translateY(-3%); */
+}
+.right .arrow, .left .arrow {
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+}
+.right {
+    left: calc(100% + 10px);
+}
+.right .arrow {
+    left: -8px;
+    border-right: 10px solid #212529;
+}
+.left {
+    right: calc(100% + 18px);
+}
+.left .arrow {
+    right: -8px;
+    border-left: 10px solid #212529;
+}
+.bottom {
+    top: calc(100% + 18px);
+    left: 50%;
+    transform: translateX(-50%);
+}
+.bottom .arrow {
+    top: -8px;
+    left: calc(50% - 10px);
+    border-right: 10px solid transparent;
+    border-bottom: 10px solid #212529;
+    border-left: 10px solid transparent;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin: 10px 5px;
+}
+
+button:focus {
+    outline: none;
+}
+
+.button-primary {
+    background: rgb(22, 158, 158);
+    border: 1px solid rgb(22, 158, 158);
+    color: #fff;
+}
+
+.button-secondary {
+    border: 1px solid #fff;
+    color: rgb(22, 158, 158);
+    background: #fff;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+   }
+    100% {
+        opacity: 1;
+   }
+}
