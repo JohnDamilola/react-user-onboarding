@@ -46,6 +46,7 @@ const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props
                         </div>
                         : index === (maxLength - 1) 
                             ? <div className={styles['align-center']}>
+                                <button className={styles['button-secondary']} onClick={prev}>previous</button>
                                 <button className={styles['button-primary']} onClick={onCloseAndReset}>End Tour</button>
                             </div>
                             : <div className={styles['align-center']}>

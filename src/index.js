@@ -23,15 +23,12 @@ const UserOnboarding = ({ config, isVisible, onClose, beginFrom }) => {
         : selectedData.component === 'tooltip'
           ? <Tooltip
               index={index}
-              id={selectedData.id}
               selectedData={selectedData}
               setIndex={setIndex}
               maxLength={config.tour.length}
               isVisible={isVisible} 
               onClose={onClose}
-              title={selectedData.children}>
-                <button>Hello</button>
-            </Tooltip>
+              title={selectedData.children} />
           : null
       }
     </div>

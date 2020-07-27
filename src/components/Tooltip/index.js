@@ -2,7 +2,7 @@ import React, { useRef } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.modules.css';
 
-const Tooltip = ({ id, index, setIndex, selectedData, maxLength, title, position, children, isVisible, ...props }) => {
+const Tooltip = ({ index, setIndex, selectedData, maxLength, title, position, isVisible }) => {
     const node = useRef();
 
     const isInRange = (x) => {
@@ -13,25 +13,33 @@ const Tooltip = ({ id, index, setIndex, selectedData, maxLength, title, position
 
     const prev = () => {
         if (isInRange(index - 1)) {
+            current.style.zIndex = 0;
+            document.body.removeChild(overlay)
             setIndex(index - 1);
         }
     }
 
     const next = () => {
         if (isInRange(index + 1)) {
+            current.style.zIndex = 0;
+            document.body.removeChild(overlay)
             setIndex(index + 1);
         }
     }
 
     const { ref: { current } } = selectedData;
-    const elementDimensions = current.getBoundingClientRect();
-    console.log(current, elementDimensions);
-    const { left, right, top, width } = elementDimensions;
+    const elementDimensions = current && current.getBoundingClientRect();
+    const { left, right, top, width, height } = elementDimensions || [];
+
+    current.style.zIndex = 999;
+    var overlay = document.createElement("section");
+    document.body.prepend(overlay);
     return (
         <div className={styles.container}
             data-testid="tooltip"
             ref={node}
-            style={{ position: 'absolute', left: `${left + width}px`, top: `${top}px` }}
+            className="exclude"
+            style={{ position: 'absolute', background: 'transparent', left: `${left}px`, width: `${width}px`, height: `${height}px`, top: `${top}px`, opacity: 1 }}
         >
             <div data-testid="tooltip-placeholder"></div>
             {isVisible && (

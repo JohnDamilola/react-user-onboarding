@@ -1,9 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Mulish', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -14,16 +12,255 @@ code {
 }
 
 .button-start {
-  padding: 10px 20px;
-  background: rgb(22, 158, 158);
+  margin: 0px;
+  padding: 15px 20px;
+  color: #4e4376;
+  background: #fff;
   border: none;
   border-radius: 6px;
   font-size: 14px;
-  font-weight: 500;
-  color: #fff;
+  font-weight: 700;
   cursor: pointer;
 }
 
 button:focus {
   outline: none;
+}
+
+p {
+  margin: 0px;
+}
+
+.container {
+  /* background-color: #191919; */
+  background: #2b5876;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+  height: 100vh;
+  padding: 0px 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px auto;
+}
+
+.intro {
+  color: #fff;
+  flex: 30%;
+  margin-right: 40px;
+}
+
+.intro h1 {
+  font-size: 50px;
+  line-height: 50px;
+  margin: 20px 0px;
+}
+
+.intro p {
+  margin-top: 15px;
+  margin-bottom: 10px;
+  line-height: 30px;
+  font-size: 16px;
+  font-weight: 500;
+  /* width: 400px; */
+}
+
+.apps {
+  display: flex;
+  flex: 70%;
+  flex-direction: row-reverse;
+  /* box-shadow: 0px 1px 8px 4px #4e4376; */
+  border-radius: 10px;
+}
+
+.app-left {
+  background: #fff;
+  padding: 20px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.app-right {
+  position: relative;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 180px);
+  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-bottom-left-radius: 10px;
+}
+
+.box {
+  padding: 20px;
+  border: 2px solid #fff;
+  color: #fff;
+  cursor: pointer;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+
+.bg-pink {
+  background: #DD2476;
+  color: #fff;
+  border-right: 0px;
+  border-bottom: 0px;
+  border-top-left-radius: 10px;
+}
+
+.bg-pink h1 {
+  font-size: 60px;
+  font-weight: 900;
+  line-height: 60px;
+}
+
+.bg-pink p {
+  font-size: 30px;
+  line-height: 30px;
+}
+
+.bg-yellow {
+  display: flex;
+  background: #11a3cf;
+  justify-content: center;
+  border-bottom: 0px;
+}
+
+.bg-green {
+  background: #42b127;
+  display: flex;
+  border-right: 0px;
+  flex-direction: column;
+  justify-content: space-between;
+  border-bottom-left-radius: 10px;
+}
+
+.bg-blue {
+  background: #8E34FF;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+span.bigger {
+  font-size: 30px;
+  margin-bottom: 10px;
+}
+
+p.small {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.rotate-90 {
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+}
+
+.row-1 {
+  display: flex;
+  flex: 1;
+}
+
+.row-3 {
+  display: flex;
+  flex: 3;
+}
+
+.col-1 {
+  flex: 1;
+}
+
+.col-2 {
+  flex: 2;
+}
+
+.col-5 {
+  flex: 5;
+}
+
+form {
+  /* padding: 20px; */
+}
+
+input {
+  height: 40px;
+  width: 100%;
+  width: -webkit-fill-available;
+  margin-bottom: 20px;
+  border-radius: 8px;
+  border: 2px solid #f2f2f2;
+  padding: 0px 10px;
+}
+
+.todo-list {
+  margin-top: 20px;
+}
+
+.todo-list .todo-list-item {
+  padding: 15px 10px;
+  box-shadow: 2px 0px 4px 2px #f2f2f2;
+  border-top-right-radius: 6px;
+  border-bottom-right-radius: 6px;
+  margin-bottom: 10px;
+  font-size: 12px;
+  transition: all 0.15s ease-in;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.todo-list > p {
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 20px;
+  margin-bottom: 5px;
+  color: #a3a3a3;
+  font-weight: 600;
+}
+
+.todo-list .todo-list-item:hover {
+  transform: translateX(-10px);
+}
+
+.todo-list .todo-list-item.urgency1 {
+  border-left: 6px solid #DD2476;
+}
+
+.todo-list .todo-list-item.urgency2 {
+  border-left: 6px solid #11a3cf;
+}
+
+.todo-list .todo-list-item.urgency3 {
+  border-left: 6px solid #42b127;
+}
+
+.todo-list .todo-list-item.urgency4 {
+  border-left: 6px solid #8E34FF;
+}
+
+.btn-fab {
+  position: absolute;
+  background: #191919;
+  bottom: 10px;
+  right: 20px;
+  border-radius: 50%;
+  width: 50px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 50px;
+  box-shadow: 0px 1px 2px #0f0f0f;
+}
+
+.btn-fab img {
+  width: 20px;
+  height: 20px;
+}
+
+.btn-fab img.active {
+  transform: rotate(45deg);
 }

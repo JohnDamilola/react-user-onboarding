@@ -48,12 +48,13 @@
 .modal-pane .modal-content .modal-body {
     overflow: scroll;
     padding: 20px 30px;
-    padding-top: 0px;
+    padding-top: 30px;
 }
 
 .modal-pane .modal-content .modal-body p {
     line-height: 25px;
     font-size: 15px;
+    margin-bottom: 20px;
 }
 
 .bold {
