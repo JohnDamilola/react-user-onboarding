@@ -7,7 +7,11 @@
 ## Install
 
 ```bash
-npm install --save react-user-onboarding
+npm install react-user-onboarding
+```
+
+```bash
+yarn add react-user-onboarding
 ```
 
 ## Usage
@@ -15,13 +19,20 @@ npm install --save react-user-onboarding
 ```jsx
 import React, { Component } from 'react'
 
-import MyComponent from 'react-user-onboarding'
+import { UserOnboarding } from 'react-user-onboarding'
 import 'react-user-onboarding/dist/index.css'
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+const Example = () => {
+  return (
+    <div>
+      <UserOnboarding 
+        beginFrom={0} 
+        config={config} 
+        isVisible={isVisible} 
+        onClose={() => setIsVisible(false)} 
+      />
+    </div>
+  )
 }
 ```
 
