@@ -31,7 +31,7 @@ p {
   margin: 0px;
 }
 
-.container {
+.app-container {
   /* background-color: #191919; */
   background: #2b5876;  /* fallback for old browsers */
   background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */

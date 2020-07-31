@@ -6,7 +6,7 @@ import './index.css';
 
 const App = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [todayTasks1, setTodayTasks1] = useState([
+  const todayTasks1 = [
     {
       title: "Get feedback to Stacy about designs",
       description: "",
@@ -14,8 +14,8 @@ const App = () => {
       status: "pending",
       deadline: "July 28th"
     }
-  ])
-  const [todayTasks2, setTodayTasks2] = useState([
+  ]
+  const todayTasks2 = [
     {
       title: "Finalize Q2 review & Q3 strategic planning",
       description: "",
@@ -30,8 +30,8 @@ const App = () => {
       status: "pending",
       deadline: "July 28th"
     }
-  ])
-  const [todayTasks3, setTodayTasks3] = useState([
+  ]
+  const todayTasks3 = [
     {
       title: "Pick a venue for end-of-summer celebration",
       description: "",
@@ -39,8 +39,8 @@ const App = () => {
       status: "pending",
       deadline: "July 28th"
     }
-  ])
-  const [todayTasks4, setTodayTasks4] = useState([
+  ]
+  const todayTasks4 = [
     {
       title: "Respond to Kyle's email about travel recommendations",
       description: "",
@@ -48,8 +48,7 @@ const App = () => {
       status: "pending",
       deadline: "July 28th"
     }
-  ])
-  const [index, setIndex] = useState(0);
+  ]
   const elem1 = useRef();
   const elem2 = useRef();
   const elem3 = useRef();
@@ -64,7 +63,7 @@ const App = () => {
         intro: true,
         children: (
           <div>
-            <p>Hi <b>Damilola</b> 👋</p>
+            <p>Hi <b>Damilola</b> <span role="img" aria-label="hello">👋</span></p>
 
             <p>Welcome to React User Onboarding Demo App. This is a sample illustration of how the library can be implemented in your existing web apps.</p>
 
@@ -134,10 +133,10 @@ const App = () => {
     ]
   }
   return (
-    <div className="container">
+    <div className="app-container">
       <div className="intro">
         <div>
-          <h2>Hello Damilola! 👋</h2>
+          <h2>Hello Damilola! <span role="img" aria-label="hello">👋</span></h2>
           <h1>Get your priorities right with too-doo!</h1>
           <p>The most effective to-do app you'll ever need. Inspired by Eisenhower.
             </p>
@@ -145,7 +144,7 @@ const App = () => {
         </div>
       </div>
       <div className="apps">
-        <div className="col-1 app-left">
+        <div className="col-1 app-left" ref={elem1}>
           <form>
             <input placeholder="Search today tasks" />
           </form>
@@ -153,9 +152,9 @@ const App = () => {
           <div className="todo-list">
             <p>URGENT & IMPORTANT</p>
             {
-              todayTasks1.map(({title, urgency, deadline}, i) => {
+              todayTasks1.map(({title, urgency}, i) => {
                 return (
-                  <div className={`todo-list-item urgency${urgency}`}>
+                  <div className={`todo-list-item urgency${urgency}`} key={i}>
                     <p>{title}</p>
                   </div>
                 )
@@ -163,9 +162,9 @@ const App = () => {
             }
             <p>IMPORTANT</p>
             {
-              todayTasks2.map(({title, urgency, deadline}, i) => {
+              todayTasks2.map(({title, urgency}, i) => {
                 return (
-                  <div className={`todo-list-item urgency${urgency}`}>
+                  <div className={`todo-list-item urgency${urgency}`} key={i}>
                     <p>{title}</p>
                   </div>
                 )
@@ -173,9 +172,9 @@ const App = () => {
             }
             <p>URGENT</p>
             {
-              todayTasks3.map(({title, urgency, deadline}, i) => {
+              todayTasks3.map(({title, urgency}, i) => {
                 return (
-                  <div className={`todo-list-item urgency${urgency}`}>
+                  <div className={`todo-list-item urgency${urgency}`} key={i}>
                     <p>{title}</p>
                   </div>
                 )
@@ -183,9 +182,9 @@ const App = () => {
             }
             <p>NOT URGENT & NOT IMPORTANT</p>
             {
-              todayTasks4.map(({title, urgency, deadline}, i) => {
+              todayTasks4.map(({title, urgency}, i) => {
                 return (
-                  <div className={`todo-list-item urgency${urgency}`}>
+                  <div className={`todo-list-item urgency${urgency}`} key={i}>
                     <p>{title}</p>
                   </div>
                 )
@@ -212,24 +211,13 @@ const App = () => {
               <p className="small">Not Important and Not Urgent</p>
               <p className="small">02</p>
             </div>
-            <button className="btn-fab" ref={elem1}>
-              <img src={require('./img/plus.svg')} />
+            <button className="btn-fab" ref={elem2}>
+              <img alt="btn-plus" src={require('./img/plus.svg')} />
             </button>
           </div>
         </div>
       </div>
       <UserOnboarding beginFrom={0} config={config} isVisible={isVisible} onClose={() => setIsVisible(false)} />
-      {/* <button className="button-start" onClick={() => setIsVisible(true)}>Begin Onboarding Tour</button>
-      <button id="elem1" ref={elem1}>First Button</button>
-      <button id="tooltip2" ref={elem2}>Second Button</button>
-      
-      <div>
-        <h2>Hello World!</h2>
-
-        <img ref={elem4} width="100px" src="https://cdn4.iconfinder.com/data/icons/avatar-circle-1-1/72/6-512.png" />
-
-        <button id="tooltip1" ref={elem3}>Third Button</button>
-      </div> */}
     </div>
   )
 }

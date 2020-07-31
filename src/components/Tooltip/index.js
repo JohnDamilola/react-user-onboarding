@@ -1,9 +1,18 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.modules.css';
 
-const Tooltip = ({ index, setIndex, selectedData, maxLength, title, position, isVisible }) => {
+const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible }) => {
     const node = useRef();
+    const tooltipNode = useRef();
+    const [tooltipDimension, setTooltipDimension] = useState();
+
+    useEffect(() => {
+        if (tooltipNode.current && !tooltipDimension) {
+            const { offsetWidth, offsetHeight } = tooltipNode.current || [];
+            setTooltipDimension({ offsetWidth, offsetHeight });
+        }
+    }, [tooltipNode])
 
     const isInRange = (x) => {
         const min = 0;
@@ -13,38 +22,70 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, position, is
 
     const prev = () => {
         if (isInRange(index - 1)) {
-            current.style.zIndex = 0;
-            document.body.removeChild(overlay)
+            removeOverlay();
             setIndex(index - 1);
         }
     }
 
     const next = () => {
         if (isInRange(index + 1)) {
-            current.style.zIndex = 0;
-            document.body.removeChild(overlay)
+            removeOverlay();
             setIndex(index + 1);
         }
     }
 
+    const removeOverlay = () => {
+        var overlays = document.getElementsByTagName("section");
+        for (let overlay of overlays) {
+            document.body.removeChild(overlay)
+        }
+        current.style.zIndex = 0;
+    }
+
+    const generateTooltipStyle = (elementDimensions) => {
+        const { left, right, bottom, top, width, height } = elementDimensions || [];
+        const { scrollWidth: bodyScrollWidth, scrollHeight: bodyScrollHeight } = document.body;
+        
+        const { offsetWidth: tooltipWidth, offsetHeight: tooltipHeight } = tooltipDimension || [];
+
+        let position;
+        if (bodyScrollWidth < right + tooltipWidth) {
+            position = 'left';
+        } else if (bodyScrollHeight < bottom + tooltipHeight) {
+            position = 'top'; 
+        } else {
+            position = 'right'
+        }
+        return [{ 
+            position: 'absolute', background: 'transparent', left: `${left}px`, width: `${width}px`, height: `${height}px`, top: `${top}px`, opacity: 1 
+        }, position]
+    }
+    
     const { ref: { current } } = selectedData;
     const elementDimensions = current && current.getBoundingClientRect();
-    const { left, right, top, width, height } = elementDimensions || [];
-
+    
     current.style.zIndex = 999;
-    var overlay = document.createElement("section");
-    document.body.prepend(overlay);
+    var existingOverlays = document.getElementsByTagName("section");
+    var overlay;
+    if (existingOverlays.length === 0) {
+        overlay = document.createElement("section");
+        overlay.style.width = document.body.scrollWidth + 'px';
+        overlay.style.height = document.body.scrollHeight + 'px';
+        document.body.prepend(overlay);
+    }
+    const [style, tooltipPosition] = generateTooltipStyle(elementDimensions);
     return (
         <div className={styles.container}
             data-testid="tooltip"
             ref={node}
             className="exclude"
-            style={{ position: 'absolute', background: 'transparent', left: `${left}px`, width: `${width}px`, height: `${height}px`, top: `${top}px`, opacity: 1 }}
+            style={style}
         >
             <div data-testid="tooltip-placeholder"></div>
             {isVisible && (
                 <div
-                    className={`${styles.tooltipContent} ${styles[position]}`}
+                    ref={tooltipNode}
+                    className={`${styles.tooltipContent} ${styles[tooltipPosition]}`}
                     data-testid="tooltip-content"
                 >
                     <span className={styles.arrow}></span>
@@ -59,15 +100,9 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, position, is
     )
 }
 
-Tooltip.defaultProps = {
-    position: 'right'
-};
-
 const propTypes = {
-    title: PropTypes.string.isRequired,
-    position: PropTypes.string,
-    visible: PropTypes.bool.isRequired,
-    children: PropTypes.node.isRequired,
+    title: PropTypes.object.isRequired,
+    isVisible: PropTypes.bool.isRequired
 };
 
 Tooltip.propTypes = propTypes;

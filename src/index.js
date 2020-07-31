@@ -6,7 +6,6 @@ const UserOnboarding = ({ config, isVisible, onClose, beginFrom }) => {
   const [index, setIndex] = useState(beginFrom);
   
   const selectedData = config.tour[index];
-  console.log(selectedData)
   return (
     <div>
       {
