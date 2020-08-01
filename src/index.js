@@ -14,6 +14,8 @@ import Tooltip from './components/Tooltip';
 /*
 * TODO:
 * Capture escape key and navigation keys
+* Speech bubble
+* Trigger
 */
 
 const UserOnboarding = ({ config, isVisible, onClose }) => {

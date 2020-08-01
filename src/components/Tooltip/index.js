@@ -43,7 +43,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
     }
 
     const computePosition = (elementDimensions) => {
-        const { left, right, bottom, top, width, height } = elementDimensions || [];
+        const { left, right, bottom, top } = elementDimensions || [];
         const { scrollWidth: bodyScrollWidth, scrollHeight: bodyScrollHeight } = document.body;
         
         const { offsetWidth: tooltipWidth, offsetHeight: tooltipHeight } = tooltipDimension || [];
@@ -55,13 +55,13 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
         const cond3 = left < tooltipWidth;
         const cond4 = top < tooltipHeight;
 
-        if (!cond1 && !cond2 && !cond3 && !cond4) {
+        if (cond1 && !cond2 && !cond3 && !cond4) {
             position = 'center';
         } else if (cond1 && !cond3) {
             position = 'left'
         } else if (cond2 && !cond4) {
             position = 'top';
-        } else if (cond3 && !cond1) {
+        } else if ((cond3 && !cond1) || !cond1) {
             position = 'right';
         } else if (cond4 && !cond2) {
             position = 'bottom';
@@ -73,7 +73,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
     }
 
     const generateTooltipStyle = (elementDimensions) => {
-        const { top, width, height } = elementDimensions || [];
+        const { top, width, height, left } = elementDimensions || [];
 
 
         const position = computePosition(elementDimensions);
@@ -113,8 +113,8 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
                     <span className={styles.arrow}></span>
                     {title}
                     <div className={styles['align-center']}>
-                        <button className={styles['button-secondary']} onClick={prev}>previous</button>
-                        <button className={styles['button-primary']} onClick={next}>next</button>
+                        <button className={styles['button-secondary']} onClick={prev}>Prev</button>
+                        <button className={styles['button-primary']} onClick={next}>Next</button>
                     </div>
                 </div>
             )}

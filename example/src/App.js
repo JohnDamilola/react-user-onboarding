@@ -131,7 +131,7 @@ const App = () => {
     ]
   }
   return (
-    <div className="app-container" ref={elem1}>
+    <div className="app-container">
       <div className="intro">
         <div>
           <h2>Hello Damilola! <span role="img" aria-label="hello">👋</span></h2>
@@ -142,7 +142,7 @@ const App = () => {
         </div>
       </div>
       <div className="apps">
-        <div className="col-1 app-left">
+        <div className="col-1 app-left" ref={elem1}>
           <form>
             <input placeholder="Search today tasks" />
           </form>
