@@ -73,14 +73,11 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
     }
 
     const generateTooltipStyle = (elementDimensions) => {
-        const { left, right, bottom, top, width, height } = elementDimensions || [];
-        const { scrollWidth: bodyScrollWidth, scrollHeight: bodyScrollHeight } = document.body;
-        
-        const { offsetWidth: tooltipWidth, offsetHeight: tooltipHeight } = tooltipDimension || [];
+        const { top, width, height } = elementDimensions || [];
+
 
         const position = computePosition(elementDimensions);
 
-        console.log(position + ' - ' + bodyScrollHeight, bodyScrollWidth, right, tooltipHeight, tooltipWidth)
         return [{ 
             position: 'absolute', background: 'transparent', left: `${left}px`, width: `${width}px`, height: `${height}px`, top: `${top}px`, opacity: 1 
         }, position]
