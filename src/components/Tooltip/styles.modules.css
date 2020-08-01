@@ -45,13 +45,13 @@
     border-top: 10px solid #212529;
     border-left: 10px solid transparent;
 }
-.right, .left {
-    /* top: 10%; */
-    /* transform: translateY(-3%); */
-}
-.right .arrow, .left .arrow {
+.right .arrow, .left .arrow, .center .arrow {
     border-top: 10px solid transparent;
     border-bottom: 10px solid transparent;
+}
+.center .arrow {
+    left: -8px;
+    border-right: 10px solid #212529;
 }
 .right {
     left: calc(100% + 10px);
@@ -62,6 +62,10 @@
 }
 .left {
     right: calc(100% + 18px);
+}
+.center {
+    left: 50%;
+    top: 50%;
 }
 .left .arrow {
     right: -8px;

@@ -42,20 +42,45 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
         current.style.zIndex = 0;
     }
 
-    const generateTooltipStyle = (elementDimensions) => {
+    const computePosition = (elementDimensions) => {
         const { left, right, bottom, top, width, height } = elementDimensions || [];
         const { scrollWidth: bodyScrollWidth, scrollHeight: bodyScrollHeight } = document.body;
         
         const { offsetWidth: tooltipWidth, offsetHeight: tooltipHeight } = tooltipDimension || [];
 
         let position;
-        if (bodyScrollWidth < right + tooltipWidth) {
-            position = 'left';
-        } else if (bodyScrollHeight < bottom + tooltipHeight) {
-            position = 'top'; 
+        
+        const cond1 = bodyScrollWidth < right + tooltipWidth;
+        const cond2 = bodyScrollHeight < bottom + tooltipHeight;
+        const cond3 = left < tooltipWidth;
+        const cond4 = top < tooltipHeight;
+
+        if (!cond1 && !cond2 && !cond3 && !cond4) {
+            position = 'center';
+        } else if (cond1 && !cond3) {
+            position = 'left'
+        } else if (cond2 && !cond4) {
+            position = 'top';
+        } else if (cond3 && !cond1) {
+            position = 'right';
+        } else if (cond4 && !cond2) {
+            position = 'bottom';
         } else {
-            position = 'right'
+            position = 'center'
         }
+
+        return position;
+    }
+
+    const generateTooltipStyle = (elementDimensions) => {
+        const { left, right, bottom, top, width, height } = elementDimensions || [];
+        const { scrollWidth: bodyScrollWidth, scrollHeight: bodyScrollHeight } = document.body;
+        
+        const { offsetWidth: tooltipWidth, offsetHeight: tooltipHeight } = tooltipDimension || [];
+
+        const position = computePosition(elementDimensions);
+
+        console.log(position + ' - ' + bodyScrollHeight, bodyScrollWidth, right, tooltipHeight, tooltipWidth)
         return [{ 
             position: 'absolute', background: 'transparent', left: `${left}px`, width: `${width}px`, height: `${height}px`, top: `${top}px`, opacity: 1 
         }, position]
@@ -100,11 +125,13 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
     )
 }
 
-const propTypes = {
-    title: PropTypes.object.isRequired,
+Tooltip.propTypes = {
+    index: PropTypes.number.isRequired,
+    setIndex: PropTypes.func.isRequired,
+    selectedData: PropTypes.object.isRequired,
+    maxLength: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
     isVisible: PropTypes.bool.isRequired
 };
-
-Tooltip.propTypes = propTypes;
 
 export default Tooltip;

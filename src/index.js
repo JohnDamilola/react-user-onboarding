@@ -1,9 +1,23 @@
+/*!
+ * UserOnboarding JavaScript Library v1.1
+ * author : John Damilola @johndamilola
+ * desc: A reactjs component library for user on-boarding or user flows
+ * license : MIT
+ */
+
 import React, { useState } from 'react';
 import Modal from './components/Modal';
+import PropTypes from 'prop-types';
 import Tooltip from './components/Tooltip';
 
-const UserOnboarding = ({ config, isVisible, onClose, beginFrom }) => {
-  const [index, setIndex] = useState(beginFrom);
+
+/*
+* TODO:
+* Capture escape key and navigation keys
+*/
+
+const UserOnboarding = ({ config, isVisible, onClose }) => {
+  const [index, setIndex] = useState(0);
   
   const selectedData = config.tour[index];
   return (
@@ -34,4 +48,14 @@ const UserOnboarding = ({ config, isVisible, onClose, beginFrom }) => {
   )  
 }
 
-export { UserOnboarding, Modal };
+UserOnboarding.propTypes = {
+  config: PropTypes.object.isRequired,
+  isVisible: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired
+};
+
+UserOnboarding.defaultProps = {
+  isVisible: false
+}
+
+export default UserOnboarding;

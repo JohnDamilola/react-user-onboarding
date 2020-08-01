@@ -1,8 +1,8 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styles from './styles.modules.css';
 
 const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props }) => {
-
     const isInRange = (x) => {
         const min = 0;
         const max = maxLength - 1;
@@ -58,6 +58,19 @@ const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props
             </div>
         </div>
     )
+}
+
+Modal.propTypes = {
+    intro: PropTypes.bool.isRequired,
+    index: PropTypes.number.isRequired,
+    setIndex: PropTypes.func.isRequired,
+    maxLength: PropTypes.number.isRequired,
+    isVisible: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
+};
+  
+Modal.defaultProps = {
+    isVisible: false
 }
 
 export default Modal;

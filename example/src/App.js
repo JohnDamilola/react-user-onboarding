@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-import { UserOnboarding } from 'react-user-onboarding'
+import UserOnboarding from 'react-user-onboarding'
 import 'react-user-onboarding/dist/index.css'
 import './index.css';
 
@@ -58,8 +58,6 @@ const App = () => {
     tour: [
       {
         component: 'modal',
-        verticalPosition: 'center',
-        horizontalPosition: 'center',
         intro: true,
         children: (
           <div>
@@ -133,7 +131,7 @@ const App = () => {
     ]
   }
   return (
-    <div className="app-container">
+    <div className="app-container" ref={elem1}>
       <div className="intro">
         <div>
           <h2>Hello Damilola! <span role="img" aria-label="hello">👋</span></h2>
@@ -144,7 +142,7 @@ const App = () => {
         </div>
       </div>
       <div className="apps">
-        <div className="col-1 app-left" ref={elem1}>
+        <div className="col-1 app-left">
           <form>
             <input placeholder="Search today tasks" />
           </form>
@@ -217,7 +215,11 @@ const App = () => {
           </div>
         </div>
       </div>
-      <UserOnboarding beginFrom={0} config={config} isVisible={isVisible} onClose={() => setIsVisible(false)} />
+      <UserOnboarding 
+        config={config} 
+        isVisible={isVisible} 
+        onClose={() => setIsVisible(false)} 
+      />
     </div>
   )
 }
