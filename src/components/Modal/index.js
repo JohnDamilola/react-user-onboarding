@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.modules.css';
 
 const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props }) => {
+
+    const [hasSetEventListener, setEventListener] = useState(false);
+
     const isInRange = (x) => {
         const min = 0;
         const max = maxLength - 1;
@@ -12,18 +15,41 @@ const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props
     const prev = () => {
         if (isInRange(index - 1)) {
             setIndex(index - 1);
+        } else {
+            onCloseAndReset();
         }
     }
 
     const next = () => {
         if (isInRange(index + 1)) {
             setIndex(index + 1);
+        } else {
+            onCloseAndReset();
         }
     }
 
     const onCloseAndReset = () => {
         onClose();
         setIndex(0);
+    }
+
+    const checkKey = (e) => {
+        e = e || window.event;
+        const { keyCode } = e;
+        if ([38, 39].includes(keyCode)) { // up and right arrow
+            next();
+        } else if ([40, 37].includes(keyCode)) { // down and left arrow
+            prev();
+        } else if (keyCode === 27) { // escape key
+            onCloseAndReset();
+        }
+        setEventListener(false);
+        document.removeEventListener("keydown", checkKey, false);
+    };
+    
+    if (!hasSetEventListener) {
+        document.addEventListener("keydown", checkKey, false);
+        setEventListener(true);
     }
 
     return (

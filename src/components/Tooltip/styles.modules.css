@@ -35,7 +35,7 @@
     height: 0;
 }
 .top {
-    bottom: calc(100% + 18px);
+    bottom: calc(100% + 8px);
     left: 50%;
     transform: translateX(-50%);
 }
@@ -62,7 +62,7 @@
     border-right: 10px solid #fff;
 }
 .left {
-    right: calc(100% + 18px);
+    right: calc(100% + 8px);
 }
 .center {
     left: 50%;
@@ -73,7 +73,7 @@
     border-left: 10px solid #fff;
 }
 .bottom {
-    top: calc(100% + 18px);
+    top: calc(100% + 8px);
     left: 50%;
     transform: translateX(-50%);
 }

@@ -5,7 +5,7 @@
  * license : MIT
  */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from './components/Modal';
 import PropTypes from 'prop-types';
 import Tooltip from './components/Tooltip';
@@ -13,41 +13,46 @@ import Tooltip from './components/Tooltip';
 
 /*
 * TODO:
-* Capture escape key and navigation keys
 * Speech bubble
 * Trigger
 */
 
 const UserOnboarding = ({ config, isVisible, onClose }) => {
   const [index, setIndex] = useState(0);
-  
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    setVisible(isVisible);
+  }, [isVisible])
+
   const selectedData = config.tour[index];
-  return (
+
+  return visible ? (
     <div>
       {
         selectedData.component === 'modal'
-        ? <Modal
+          ? <Modal
             intro={selectedData.intro || false}
             index={index}
             setIndex={setIndex}
             maxLength={config.tour.length}
-            isVisible={isVisible} 
+            isVisible={visible}
             onClose={onClose}>
-              {selectedData.children}
+            {selectedData.children}
           </Modal>
-        : selectedData.component === 'tooltip'
-          ? <Tooltip
+          : selectedData.component === 'tooltip'
+            ? <Tooltip
               index={index}
               selectedData={selectedData}
               setIndex={setIndex}
               maxLength={config.tour.length}
-              isVisible={isVisible} 
+              isVisible={visible}
               onClose={onClose}
               title={selectedData.children} />
-          : null
+            : null
       }
     </div>
-  )  
+  ) : null
 }
 
 UserOnboarding.propTypes = {

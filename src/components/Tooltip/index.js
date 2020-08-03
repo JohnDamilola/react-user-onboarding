@@ -1,11 +1,13 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.modules.css';
 
-const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible }) => {
+const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, onClose }) => {
     const node = useRef();
     const tooltipNode = useRef();
     const [tooltipDimension, setTooltipDimension] = useState();
+    const [removedOverlay, setRemovedOverlay] = useState(false);
+    const [hasSetEventListener, setEventListener] = useState(false);
 
     useEffect(() => {
         if (tooltipNode.current && !tooltipDimension) {
@@ -21,17 +23,26 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
     }
 
     const prev = () => {
+        removeOverlay()
         if (isInRange(index - 1)) {
-            removeOverlay();
             setIndex(index - 1);
+        } else {
+            onCloseAndReset();
         }
     }
 
     const next = () => {
+        removeOverlay()
         if (isInRange(index + 1)) {
-            removeOverlay();
             setIndex(index + 1);
+        } else {
+            onCloseAndReset();
         }
+    }
+
+    const onCloseAndReset = () => {
+        onClose();
+        setIndex(0);
     }
 
     const removeOverlay = () => {
@@ -45,11 +56,11 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
     const computePosition = (elementDimensions) => {
         const { left, right, bottom, top } = elementDimensions || [];
         const { scrollWidth: bodyScrollWidth, scrollHeight: bodyScrollHeight } = document.body;
-        
+
         const { offsetWidth: tooltipWidth, offsetHeight: tooltipHeight } = tooltipDimension || [];
 
         let position;
-        
+
         const cond1 = bodyScrollWidth < right + tooltipWidth;
         const cond2 = bodyScrollHeight < bottom + tooltipHeight;
         const cond3 = left < tooltipWidth;
@@ -78,23 +89,46 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible })
 
         const position = computePosition(elementDimensions);
 
-        return [{ 
-            position: 'absolute', background: 'transparent', left: `${left}px`, width: `${width}px`, height: `${height}px`, top: `${top}px`, opacity: 1 
+        return [{
+            position: 'absolute', background: 'transparent', left: `${left}px`, width: `${width}px`, height: `${height}px`, top: `${top}px`, opacity: 1
         }, position]
     }
-    
+
     const { ref: { current } } = selectedData;
     const elementDimensions = current && current.getBoundingClientRect();
-    
+
     current.style.zIndex = 999;
     var existingOverlays = document.getElementsByTagName("section");
     var overlay;
-    if (existingOverlays.length === 0) {
+    if (existingOverlays.length === 0 && !removedOverlay) {
         overlay = document.createElement("section");
         overlay.style.width = document.body.scrollWidth + 'px';
         overlay.style.height = document.body.scrollHeight + 'px';
         document.body.prepend(overlay);
     }
+
+    const checkKey = (e) => {
+        e = e || window.event;
+        const { keyCode } = e;
+
+        if ([38, 39].includes(keyCode)) { // up and right arrow keys
+            next();
+        } else if ([40, 37].includes(keyCode)) { // down and left arrow keys
+            prev();
+        } else if (keyCode === 27) { // escape key
+            removeOverlay();
+            setRemovedOverlay(true)
+            onCloseAndReset();
+        }
+        setEventListener(false);
+        document.removeEventListener("keydown", checkKey, false);
+    };
+
+    if (!hasSetEventListener) {
+        document.addEventListener("keydown", checkKey, false);
+        setEventListener(true);
+    }
+
     const [style, tooltipPosition] = generateTooltipStyle(elementDimensions);
     return (
         <div className={styles.container}
@@ -127,8 +161,9 @@ Tooltip.propTypes = {
     setIndex: PropTypes.func.isRequired,
     selectedData: PropTypes.object.isRequired,
     maxLength: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    isVisible: PropTypes.bool.isRequired
+    title: PropTypes.object.isRequired,
+    isVisible: PropTypes.bool.isRequired,
+    onClose: PropTypes.func.isRequired
 };
 
 export default Tooltip;

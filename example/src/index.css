@@ -40,6 +40,7 @@ p {
   height: 100vh;
   padding: 0px 80px;
   display: flex;
+  overflow: scroll;
   align-items: center;
   justify-content: space-between;
 }
@@ -68,27 +69,32 @@ p {
 .apps {
   display: flex;
   flex: 70%;
+  background: #fff;
   flex-direction: row-reverse;
-  /* box-shadow: 0px 1px 8px 4px #4e4376; */
   border-radius: 10px;
+  height: calc(100vh - 180px);
 }
 
 .app-left {
+  height: auto;
+  /* height: calc(100vh - 180px); */
   background: #fff;
   padding: 20px;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
+  overflow: scroll;
 }
 
 .app-right {
+  height: auto;
+  /* height: calc(100vh - 180px); */
   position: relative;
   background: #fff;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 180px);
-  border-radius: 10px;
   border-top-left-radius: 10px;
   border-bottom-left-radius: 10px;
+  overflow: scroll;
 }
 
 .box {
