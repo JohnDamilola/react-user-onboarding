@@ -11,12 +11,12 @@ import Tooltip from './components/Tooltip';
 /**
  * A ReactJS component library for user on-boarding or user flows
  * @param {object} props Component props
- * @param {object} props.config the story object for the onboarding flow
+ * @param {array} props.story the story array for the onboarding flow
  * @param {bool} props.isVisible value used to toggle the component's visibility
  * @param {function} props.onClose function to close the component
  * @returns {JSX.Element} Component template
  */
-const UserOnboarding = ({ config, isVisible, onClose }) => {
+const UserOnboarding = ({ story, isVisible, onClose }) => {
   const [index, setIndex] = useState(0);
   const [visible, setVisible] = useState(false);
 
@@ -24,7 +24,7 @@ const UserOnboarding = ({ config, isVisible, onClose }) => {
     setVisible(isVisible);
   }, [isVisible])
 
-  const selectedData = config.tour[index];
+  const selectedData = story[index];
 
   return visible ? (
     <div>
@@ -34,7 +34,7 @@ const UserOnboarding = ({ config, isVisible, onClose }) => {
             intro={selectedData.intro || false}
             index={index}
             setIndex={setIndex}
-            maxLength={config.tour.length}
+            maxLength={story.length}
             isVisible={visible}
             onClose={onClose}>
             {selectedData.children}
@@ -44,7 +44,7 @@ const UserOnboarding = ({ config, isVisible, onClose }) => {
               index={index}
               selectedData={selectedData}
               setIndex={setIndex}
-              maxLength={config.tour.length}
+              maxLength={story.length}
               isVisible={visible}
               onClose={onClose}
               title={selectedData.children} />
@@ -55,7 +55,7 @@ const UserOnboarding = ({ config, isVisible, onClose }) => {
 }
 
 UserOnboarding.propTypes = {
-  config: PropTypes.object.isRequired,
+  story: PropTypes.array.isRequired,
   isVisible: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired
 };

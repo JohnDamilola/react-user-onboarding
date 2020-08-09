@@ -1,3 +1,4 @@
+
 # Welcome to react-user-onboarding 👋
 ![Version](https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/JohnDamilola/react-user-onboarding#readme)
@@ -7,26 +8,71 @@
 
 > A React Component library for User Onboarding
 
-### 🏠 [Homepage](https://github.com/JohnDamilola/react-user-onboarding#readme)
-
 ### ✨ [Demo](https://johndamilola.github.io/react-user-onboarding)
 
 ## Install
 
-```sh
-yarn install
+```bash
+npm install react-user-onboarding
+```
+
+```bash
+yarn add react-user-onboarding
 ```
 
 ## Usage
 
-```sh
-yarn run start
+```jsx
+import React, { Component } from 'react'
+
+import { UserOnboarding } from 'react-user-onboarding'
+import 'react-user-onboarding/dist/index.css'
+
+const Example = () => {
+  return (
+    <div>
+      <UserOnboarding 
+        config={config} 
+        isVisible={isVisible} 
+        onClose={() => setIsVisible(false)} 
+      />
+    </div>
+  )
+}
 ```
 
-## Run tests
+## UserOnboarding API
 
-```sh
-yarn run test
+|Name     |Description                                    |Type                          |Default|
+|---------|-----------------------------------------------|------------------------------|-------|
+|story    |the story object for the onboarding flow       |array<[object](https://johndamilola.github.io/react-user-onboarding#story-object)>|       |
+|isVisible|value used to toggle the component's visibility|boolean                       |false  |
+|onClose  |function to close the component                |function                      |       |
+
+#### Story Object
+
+|Name     |Description                                      |Type     |Default       |
+|---------|-------------------------------------------------|---------|--------------|
+|component|indicate the type of component (modal, tooltip)  |string   |modal, tooltip|
+|intro    |value to indicate the first onboarding step      |boolean  |modal         |
+|ref      |ref to store the target node for the tooltip     |React Ref|tooltip       |
+|children |the html content of the modals and the tooltips  |ReactNode|modal, tooltip|
+
+Modal Object Example
+```jsx
+    {
+        component: 'modal',
+        intro: true,
+        children: (<div>modal content goes here</div>)
+    }
+```
+Tooltip Object Example
+```jsx
+    {
+        component: 'tooltip',
+        ref: loginFormRef,
+        children: (<div>tooltip content goes here</div>)
+    }
 ```
 
 ## Author

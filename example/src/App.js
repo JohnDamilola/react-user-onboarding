@@ -54,82 +54,80 @@ const App = () => {
   const elem3 = useRef();
   const elem4 = useRef();
   const elem5 = useRef();
-  const config = {
-    tour: [
-      {
-        component: 'modal',
-        intro: true,
-        children: (
-          <div>
-            <p>Hi <b>Damilola</b> <span role="img" aria-label="hello">👋</span></p>
+  const story = [
+    {
+      component: 'modal',
+      intro: true,
+      children: (
+        <div>
+          <p>Hi <b>Damilola</b> <span role="img" aria-label="hello">👋</span></p>
 
-            <p>Welcome to React User Onboarding Demo App. This is a sample illustration of how the library can be implemented in your existing web apps.</p>
+          <p>Welcome to React User Onboarding Demo App. This is a sample illustration of how the library can be implemented in your existing web apps.</p>
 
-            <p>Would you like to have a tour to see how it works? (If you skip, you can click the "show tour" button to get started again)</p>
-          </div>
-        )
-      },
-      {
-        component: 'tooltip',
-        ref: elem1,
-        children: (
-          <div>
-            <p>Click on this button to add a task</p>
-          </div>
-        )
-      },
-      {
-        component: 'tooltip',
-        ref: elem2,
-        children: (
-          <div>
-            <p>Click on this space to show only "Important & Urgent" tasks.</p>
-          </div>
-        )
-      },
-      {
-        component: 'tooltip',
-        ref: elem3,
-        children: (
-          <div>
-            <p>Click on this space to show only "Important" tasks.</p>
-          </div>
-        )
-      },
-      {
-        component: 'tooltip',
-        ref: elem4,
-        children: (
-          <div>
-            <p>Click on this space to show only "Urgent" tasks.</p>
-          </div>
-        )
-      },
-      {
-        component: 'tooltip',
-        ref: elem5,
-        children: (
-          <div>
-            <p>Click on this space to show only "Not Important & Not Urgent" tasks.</p>
-          </div>
-        )
-      },
-      {
-        component: 'modal',
-        tooltipID: '#getStarted',
-        verticalPosition: 'center',
-        horizontalPosition: 'center',
-        intro: false,
-        children: (
-          <div>
-            <p>Thanks Damilola!</p>
+          <p>Would you like to have a tour to see how it works? (If you skip, you can click the "show tour" button to get started again)</p>
+        </div>
+      )
+    },
+    {
+      component: 'tooltip',
+      ref: elem1,
+      children: (
+        <div>
+          <p>Click on this button to add a task</p>
+        </div>
+      )
+    },
+    {
+      component: 'tooltip',
+      ref: elem2,
+      children: (
+        <div>
+          <p>Click on this space to show only "Important & Urgent" tasks.</p>
+        </div>
+      )
+    },
+    {
+      component: 'tooltip',
+      ref: elem3,
+      children: (
+        <div>
+          <p>Click on this space to show only "Important" tasks.</p>
+        </div>
+      )
+    },
+    {
+      component: 'tooltip',
+      ref: elem4,
+      children: (
+        <div>
+          <p>Click on this space to show only "Urgent" tasks.</p>
+        </div>
+      )
+    },
+    {
+      component: 'tooltip',
+      ref: elem5,
+      children: (
+        <div>
+          <p>Click on this space to show only "Not Important & Not Urgent" tasks.</p>
+        </div>
+      )
+    },
+    {
+      component: 'modal',
+      tooltipID: '#getStarted',
+      verticalPosition: 'center',
+      horizontalPosition: 'center',
+      intro: false,
+      children: (
+        <div>
+          <p>Thanks Damilola!</p>
 
-            <p>You have now come to the end of the onboarding demo.</p>
-          </div>
-        )
-      }
-    ]
-  }
+          <p>You have now come to the end of the onboarding demo.</p>
+        </div>
+      )
+    }
+  ]
   return (
     <div className="app-container">
       <div className="intro">
@@ -150,7 +148,7 @@ const App = () => {
           <div className="todo-list">
             <p>URGENT & IMPORTANT</p>
             {
-              todayTasks1.map(({title, urgency}, i) => {
+              todayTasks1.map(({ title, urgency }, i) => {
                 return (
                   <div className={`todo-list-item urgency${urgency}`} key={i}>
                     <p>{title}</p>
@@ -160,7 +158,7 @@ const App = () => {
             }
             <p>IMPORTANT</p>
             {
-              todayTasks2.map(({title, urgency}, i) => {
+              todayTasks2.map(({ title, urgency }, i) => {
                 return (
                   <div className={`todo-list-item urgency${urgency}`} key={i}>
                     <p>{title}</p>
@@ -170,7 +168,7 @@ const App = () => {
             }
             <p>URGENT</p>
             {
-              todayTasks3.map(({title, urgency}, i) => {
+              todayTasks3.map(({ title, urgency }, i) => {
                 return (
                   <div className={`todo-list-item urgency${urgency}`} key={i}>
                     <p>{title}</p>
@@ -180,7 +178,7 @@ const App = () => {
             }
             <p>NOT URGENT & NOT IMPORTANT</p>
             {
-              todayTasks4.map(({title, urgency}, i) => {
+              todayTasks4.map(({ title, urgency }, i) => {
                 return (
                   <div className={`todo-list-item urgency${urgency}`} key={i}>
                     <p>{title}</p>
@@ -215,10 +213,10 @@ const App = () => {
           </div>
         </div>
       </div>
-      <UserOnboarding 
-        config={config} 
-        isVisible={isVisible} 
-        onClose={() => setIsVisible(false)} 
+      <UserOnboarding
+        story={story}
+        isVisible={isVisible}
+        onClose={() => setIsVisible(false)}
       />
     </div>
   )

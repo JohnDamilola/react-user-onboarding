@@ -26,7 +26,6 @@ const Example = () => {
   return (
     <div>
       <UserOnboarding 
-        beginFrom={0} 
         config={config} 
         isVisible={isVisible} 
         onClose={() => setIsVisible(false)} 
