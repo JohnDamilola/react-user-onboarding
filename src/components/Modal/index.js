@@ -2,6 +2,17 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.modules.css';
 
+/**
+ * The modal component of the onboarding flow
+ * @param {object} props Component props
+ * @param {bool} props.intro value to determine intro step
+ * @param {number} props.index the position of the modal in the onboarding flow story object
+ * @param {function} props.setIndex function to set the value of the index
+ * @param {number} props.maxLength the total number of steps in the onboarding flow
+ * @param {bool} props.isVisible value used to toggle the component's visibility
+ * @param {function} props.onClose function to close the component
+ * @returns {JSX.Element} Component template
+ */
 const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props }) => {
 
     const [hasSetEventListener, setEventListener] = useState(false);

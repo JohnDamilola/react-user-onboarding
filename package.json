@@ -1,13 +1,20 @@
 {
   "name": "react-user-onboarding",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A React Component library for User Onboarding",
-  "author": "JohnDamilola",
+  "author": "John Damilola",
+  "homepage": "https://github.com/JohnDamilola/react-user-onboarding#readme",
   "license": "MIT",
-  "repository": "JohnDamilola/react-user-onboarding",
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JohnDamilola/react-user-onboarding.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JohnDamilola/react-user-onboarding/issues"
+  },
   "engines": {
     "node": ">=10"
   },

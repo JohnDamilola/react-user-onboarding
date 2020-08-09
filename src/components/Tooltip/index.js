@@ -2,19 +2,31 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import styles from './styles.modules.css';
 
+/**
+ * The tooltip component of the onboarding flow
+ * @param {object} props Component props
+ * @param {number} props.index the position of the tooltip in the onboarding flow story object
+ * @param {function} props.setIndex function to set the value of the index
+ * @param {object} props.selectedData object data with this particular index
+ * @param {number} props.maxLength the total number of steps in the onboarding flow
+ * @param {object} props.title component displayed in the tooltip
+ * @param {bool} props.isVisible value used to toggle the component's visibility
+ * @param {function} props.onClose function to close the component
+ * @returns {JSX.Element} Component template
+ */
 const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, onClose }) => {
-    const node = useRef();
-    const tooltipNode = useRef();
-    const [tooltipDimension, setTooltipDimension] = useState();
-    const [removedOverlay, setRemovedOverlay] = useState(false);
+    const nodeRef = useRef(null);
+    const tooltipNodeRef = useRef(null);
+    const [tooltipDimension, setTooltipDimension] = useState(null);
+    const [hasRemovedOverlay, setHasRemovedOverlay] = useState(false);
     const [hasSetEventListener, setEventListener] = useState(false);
 
     useEffect(() => {
-        if (tooltipNode.current && !tooltipDimension) {
-            const { offsetWidth, offsetHeight } = tooltipNode.current || [];
+        if (tooltipNodeRef.current && !tooltipDimension) {
+            const { offsetWidth, offsetHeight } = tooltipNodeRef.current || [];
             setTooltipDimension({ offsetWidth, offsetHeight });
         }
-    }, [tooltipNode])
+    }, [tooltipNodeRef])
 
     const isInRange = (x) => {
         const min = 0;
@@ -24,6 +36,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
 
     const prev = () => {
         removeOverlay()
+        document.addEventListener("keydown", checkKey, false);
         if (isInRange(index - 1)) {
             setIndex(index - 1);
         } else {
@@ -33,6 +46,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
 
     const next = () => {
         removeOverlay()
+        document.addEventListener("keydown", checkKey, false);
         if (isInRange(index + 1)) {
             setIndex(index + 1);
         } else {
@@ -100,7 +114,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
     current.style.zIndex = 999;
     var existingOverlays = document.getElementsByTagName("section");
     var overlay;
-    if (existingOverlays.length === 0 && !removedOverlay) {
+    if (existingOverlays.length === 0 && !hasRemovedOverlay) {
         overlay = document.createElement("section");
         overlay.style.width = document.body.scrollWidth + 'px';
         overlay.style.height = document.body.scrollHeight + 'px';
@@ -117,7 +131,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
             prev();
         } else if (keyCode === 27) { // escape key
             removeOverlay();
-            setRemovedOverlay(true)
+            setHasRemovedOverlay(true)
             onCloseAndReset();
         }
         setEventListener(false);
@@ -133,14 +147,14 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
     return (
         <div className={styles.container}
             data-testid="tooltip"
-            ref={node}
+            ref={nodeRef}
             className="exclude"
             style={style}
         >
             <div data-testid="tooltip-placeholder"></div>
             {isVisible && (
                 <div
-                    ref={tooltipNode}
+                    ref={tooltipNodeRef}
                     className={`${styles.tooltipContent} ${styles[tooltipPosition]}`}
                     data-testid="tooltip-content"
                 >
