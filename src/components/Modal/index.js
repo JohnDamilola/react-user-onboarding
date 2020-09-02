@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import PropTypes from 'prop-types';
+import useEventListener from './../../hooks/use-event-listener';
 import styles from './styles.modules.css';
 
 /**
@@ -14,8 +15,6 @@ import styles from './styles.modules.css';
  * @returns {JSX.Element} Component template
  */
 const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props }) => {
-
-    const [hasSetEventListener, setEventListener] = useState(false);
 
     const isInRange = (x) => {
         const min = 0;
@@ -44,7 +43,12 @@ const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props
         setIndex(0);
     }
 
-    const checkKey = (e) => {
+    var overlays = document.getElementsByTagName("section");
+    for (let overlay of overlays) {
+        document.body.removeChild(overlay)
+    }
+
+    const checkKey = useCallback((e) => {
         e = e || window.event;
         const { keyCode } = e;
         if ([38, 39].includes(keyCode)) { // up and right arrow
@@ -54,14 +58,10 @@ const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props
         } else if (keyCode === 27) { // escape key
             onCloseAndReset();
         }
-        setEventListener(false);
-        document.removeEventListener("keydown", checkKey, false);
-    };
-    
-    if (!hasSetEventListener) {
-        document.addEventListener("keydown", checkKey, false);
-        setEventListener(true);
-    }
+    });
+
+    // Add event listener for keydown
+    useEventListener('keydown', checkKey);
 
     return (
         <div className={`${styles['modal-pane']} ${isVisible && styles['show-modal']}`}>

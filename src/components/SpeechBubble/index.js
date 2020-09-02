@@ -16,7 +16,7 @@ import getElemDistance from '../../utils/element-distance';
  * @param {function} props.onClose function to close the component
  * @returns {JSX.Element} Component template
  */
-const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, onClose }) => {
+const SpeechBubble = ({ index, setIndex, selectedData, maxLength, title, isVisible, onClose }) => {
     const nodeRef = useRef(null);
     const tooltipNodeRef = useRef(null);
     const [tooltipDimension, setTooltipDimension] = useState(null);
@@ -175,13 +175,15 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
             data-testid="tooltip"
             ref={nodeRef}
             className="exclude"
-            style={style}
+            style={{width: '100px', height: '100px', position: 'absolute', bottom: 0, left: 0}}
         >
-            <div data-testid="tooltip-placeholder"></div>
+            <div data-testid="tooltip-placeholder">
+                <img className={styles.bubble} src="https://cdn4.iconfinder.com/data/icons/avatar-circle-1-1/72/6-512.png" />
+            </div>
             {isVisible && (
                 <div
                     ref={tooltipNodeRef}
-                    className={`${styles.tooltipContent} ${styles[tooltipPosition]}`}
+                    className={`${styles.tooltipContent} ${styles["top"]}`}
                     data-testid="tooltip-content"
                 >
                     <span className={styles.arrow}></span>
@@ -196,7 +198,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
     )
 }
 
-Tooltip.propTypes = {
+SpeechBubble.propTypes = {
     index: PropTypes.number.isRequired,
     setIndex: PropTypes.func.isRequired,
     selectedData: PropTypes.object.isRequired,
@@ -206,4 +208,4 @@ Tooltip.propTypes = {
     onClose: PropTypes.func.isRequired
 };
 
-export default Tooltip;
+export default SpeechBubble;

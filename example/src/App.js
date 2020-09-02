@@ -87,6 +87,15 @@ const App = () => {
       )
     },
     {
+      component: 'speech-bubble',
+      ref: elem2,
+      children: (
+        <div>
+          <p>Click on this space to show only "Important & Urgent" tasks.</p>
+        </div>
+      )
+    },
+    {
       component: 'tooltip',
       ref: elem3,
       children: (

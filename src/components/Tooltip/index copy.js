@@ -1,8 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
-import useEventListener from './../../hooks/use-event-listener';
 import styles from './styles.modules.css';
-import getElemDistance from '../../utils/element-distance';
 
 /**
  * The tooltip component of the onboarding flow
@@ -20,16 +18,15 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
     const nodeRef = useRef(null);
     const tooltipNodeRef = useRef(null);
     const [tooltipDimension, setTooltipDimension] = useState(null);
-    const [elementDimensions, setElementDimensions] = useState(null);
-    const [tooltipStyles, setTooltipStyles] = useState([null, ""]);
     const [hasRemovedOverlay, setHasRemovedOverlay] = useState(false);
+    const [hasSetEventListener, setEventListener] = useState(false);
 
     useEffect(() => {
         if (tooltipNodeRef.current && !tooltipDimension) {
             const { offsetWidth, offsetHeight } = tooltipNodeRef.current || [];
             setTooltipDimension({ offsetWidth, offsetHeight });
         }
-    }, [tooltipNodeRef]);
+    }, [tooltipNodeRef])
 
     const isInRange = (x) => {
         const min = 0;
@@ -37,27 +34,30 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
         return x >= min && x <= max;
     }
 
-    const calculateDimensions = () => {
-        const dimensions = current && current.getBoundingClientRect();
-        setElementDimensions(dimensions)
-    }
-
     const prev = () => {
-        current.style.zIndex = 0;
+        removeOverlay()
+        // document.addEventListener("keydown", checkKey, false);
+        console.log("PREV Checking...", isInRange(index - 1));
         if (isInRange(index - 1)) {
             setIndex(index - 1);
         } else {
             onCloseAndReset();
         }
+        setEventListener(false);
+        document.removeEventListener("keydown", checkKey, false);
     }
 
     const next = () => {
-        current.style.zIndex = 0;
+        removeOverlay();
+        // document.addEventListener("keydown", checkKey, false);
+        console.log("NEXT Checking...", isInRange(index + 1));
         if (isInRange(index + 1)) {
             setIndex(index + 1);
         } else {
             onCloseAndReset();
         }
+        setEventListener(false);
+        document.removeEventListener("keydown", checkKey, false);
     }
 
     const onCloseAndReset = () => {
@@ -75,43 +75,39 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
     }
 
     const computePosition = (elementDimensions) => {
-        const { left, right, bottom, top } = getElemDistance(current) || [];
+        const { left, right, bottom, top } = elementDimensions || [];
         const { scrollWidth: bodyScrollWidth, scrollHeight: bodyScrollHeight } = document.body;
 
         const { offsetWidth: tooltipWidth, offsetHeight: tooltipHeight } = tooltipDimension || [];
 
         let position;
 
-        console.log(bodyScrollWidth, right, tooltipWidth, elementDimensions.right)
-
         const cond1 = bodyScrollWidth < right + tooltipWidth;
         const cond2 = bodyScrollHeight < bottom + tooltipHeight;
         const cond3 = left < tooltipWidth;
         const cond4 = top < tooltipHeight;
 
-        console.log(cond1, cond2, cond3, cond4)
-        if ((cond3 && !cond1) || !cond1) {
-            position = 'right';
+        if (cond1 && !cond2 && !cond3 && !cond4) {
+            position = 'center';
         } else if (cond1 && !cond3) {
-            position = 'left';
+            position = 'left'
         } else if (cond2 && !cond4) {
             position = 'top';
+        } else if ((cond3 && !cond1) || !cond1) {
+            position = 'right';
         } else if (cond4 && !cond2) {
             position = 'bottom';
-        } else if (cond1 && !cond2 && !cond3 && !cond4) {
-            position = 'center';
         } else {
             position = 'center'
         }
-
-        console.log(position)
 
         return position;
     }
 
     const generateTooltipStyle = (elementDimensions) => {
-        const { width, height } = elementDimensions || [];
-        const { top, left } = getElemDistance(current) || [];
+        const { top, width, height, left } = elementDimensions || [];
+
+
         const position = computePosition(elementDimensions);
 
         return [{
@@ -120,12 +116,8 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
     }
 
     const { ref: { current } } = selectedData;
+    const elementDimensions = current && current.getBoundingClientRect();
 
-    const reCalculateDimensions = useCallback(() => {
-        const dimensions = current && current.getBoundingClientRect();
-        setElementDimensions(dimensions)
-    });
-    
     useEffect(() => {
         if (isInRange(index)) {
             current.style.zIndex = 999;
@@ -137,11 +129,10 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
                 overlay.style.height = document.body.scrollHeight + 'px';
                 document.body.prepend(overlay);
             }
-            calculateDimensions();
         }
     }, [index])
 
-    const checkKey = useCallback((e) => {
+    const checkKey = (e) => {
         e = e || window.event;
         const { keyCode } = e;
 
@@ -156,20 +147,26 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
             removeOverlay();
             setHasRemovedOverlay(true)
             onCloseAndReset();
+            setEventListener(false);
+            document.removeEventListener("keydown", checkKey, false);
         }
-    });
+    };
 
-    // Add event listener for keydown and resize
-    useEventListener('keydown', checkKey);
-    useEventListener('resize', reCalculateDimensions);
+    // useEffect(() => {
+    //     if (!hasSetEventListener) {
+    //         document.addEventListener("keydown", checkKey, false);
+    //         setEventListener(true);
+    //     }
+    // }, [hasSetEventListener])
 
     useEffect(() => {
-        const [style, tooltipPosition] = elementDimensions ? generateTooltipStyle(elementDimensions) : [];
-        setTooltipStyles([style, tooltipPosition])
-    }, [elementDimensions])
+        document.addEventListener("keydown", checkKey, false);
+        setEventListener(true);
+    })
 
-    const [style, tooltipPosition] = tooltipStyles;
-    // const [style, tooltipPosition] = elementDimensions ? generateTooltipStyle(elementDimensions) : [];
+
+    const [style, tooltipPosition] = generateTooltipStyle(elementDimensions);
+    console.log(hasRemovedOverlay, hasSetEventListener)
     return (
         <div className={styles.container}
             data-testid="tooltip"

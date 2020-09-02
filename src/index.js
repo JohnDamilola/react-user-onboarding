@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from './components/Modal';
 import PropTypes from 'prop-types';
 import Tooltip from './components/Tooltip';
+import SpeechBubble from './components/SpeechBubble';
 /*
 * TODO:
 * Speech bubble
@@ -22,10 +23,19 @@ const UserOnboarding = ({ story, isVisible, onClose }) => {
 
   useEffect(() => {
     setVisible(isVisible);
+    if (!isVisible) {
+      removeOverlay();
+    }
   }, [isVisible])
 
-  const selectedData = story[index];
+  const removeOverlay = () => {
+    var overlays = document.getElementsByTagName("section");
+    for (let overlay of overlays) {
+        document.body.removeChild(overlay)
+    }
+  }
 
+  const selectedData = story[index];
   return visible ? (
     <div>
       {
@@ -41,6 +51,15 @@ const UserOnboarding = ({ story, isVisible, onClose }) => {
           </Modal>
           : selectedData.component === 'tooltip'
             ? <Tooltip
+              index={index}
+              selectedData={selectedData}
+              setIndex={setIndex}
+              maxLength={story.length}
+              isVisible={visible}
+              onClose={onClose}
+              title={selectedData.children} />
+            : selectedData.component === 'speech-bubble'
+            ? <SpeechBubble
               index={index}
               selectedData={selectedData}
               setIndex={setIndex}
