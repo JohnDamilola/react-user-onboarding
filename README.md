@@ -1,14 +1,13 @@
+## react-user-onboarding 
+> ✨ A React Component library for **User Onboarding** (guided tour or explanation walkthrough) on your web application to **increase usage** and **reduce churn rate of users** upon first interaction.
 
-# Welcome to react-user-onboarding 👋
 ![Version](https://img.shields.io/badge/version-0.1.0-blue.svg?cacheSeconds=2592000)
 [![Documentation](https://img.shields.io/badge/documentation-yes-brightgreen.svg)](https://github.com/JohnDamilola/react-user-onboarding#readme)
 [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/JohnDamilola/react-user-onboarding/graphs/commit-activity)
 [![License: MIT](https://img.shields.io/github/license/JohnDamilola/react-user-onboarding)](https://github.com/JohnDamilola/react-user-onboarding/blob/master/LICENSE)
 [![Twitter: johndamilola](https://img.shields.io/twitter/follow/johndamilola.svg?style=social)](https://twitter.com/johndamilola)
 
-> A React Component library for User Onboarding
-
-### ✨ [Demo](https://johndamilola.github.io/react-user-onboarding)
+##### [Demo](https://johndamilola.github.io/react-user-onboarding) | [Documentation](https://github.com/JohnDamilola/react-user-onboarding) | [Issues](https://github.com/JohnDamilola/react-user-onboarding/issues)
 
 ## Install
 
@@ -28,11 +27,41 @@ import React, { Component } from 'react'
 import { UserOnboarding } from 'react-user-onboarding'
 import 'react-user-onboarding/dist/index.css'
 
+const story = [
+  {
+    component: 'modal',
+    intro: true,
+    children: (
+      // Html component for initial modal goes here
+    )
+  },
+  {
+    component: 'tooltip',
+    ref: elem1,
+    children: (
+      // Html component for tooltip goes here
+    )
+  },
+  {
+    component: 'speech-bubble',
+    children: (
+      // Html component for speech-bubble goes here
+    )
+  },
+  {
+    component: 'modal',
+    intro: false,
+    children: (
+      // Html component for last modal goes here
+    )
+  }
+]
+
 const Example = () => {
   return (
     <div>
       <UserOnboarding 
-        config={config} 
+        story={story} 
         isVisible={isVisible} 
         onClose={() => setIsVisible(false)} 
       />
@@ -58,7 +87,7 @@ const Example = () => {
 |ref      |ref to store the target node for the tooltip     |React Ref|tooltip       |
 |children |the html content of the modals and the tooltips  |ReactNode|modal, tooltip|
 
-Modal Object Example
+**Modal Object Example**
 ```jsx
     {
         component: 'modal',
@@ -66,7 +95,7 @@ Modal Object Example
         children: (<div>modal content goes here</div>)
     }
 ```
-Tooltip Object Example
+**Tooltip Object Example**
 ```jsx
     {
         component: 'tooltip',
@@ -77,7 +106,7 @@ Tooltip Object Example
 
 ## Author
 
-👤 **John Damilola**
+👤 **John Damilola** (made with ❤️)
 
 * Website: johndamilola.github.io
 * Twitter: [@johndamilola](https://twitter.com/johndamilola)
