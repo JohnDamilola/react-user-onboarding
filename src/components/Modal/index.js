@@ -9,12 +9,13 @@ import styles from './styles.modules.css';
  * @param {bool} props.intro value to determine intro step
  * @param {number} props.index the position of the modal in the onboarding flow story object
  * @param {function} props.setIndex function to set the value of the index
+ * @param {string} props.className css class for the modal
  * @param {number} props.maxLength the total number of steps in the onboarding flow
  * @param {bool} props.isVisible value used to toggle the component's visibility
  * @param {function} props.onClose function to close the component
  * @returns {JSX.Element} Component template
  */
-const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props }) => {
+const Modal = ({ intro, index, setIndex, className, maxLength, isVisible, onClose, ...props }) => {
 
     const isInRange = (x) => {
         const min = 0;
@@ -64,7 +65,7 @@ const Modal = ({ intro, index, setIndex, maxLength, isVisible, onClose, ...props
     useEventListener('keydown', checkKey);
 
     return (
-        <div className={`${styles['modal-pane']} ${isVisible && styles['show-modal']}`}>
+        <div className={`${className} ${styles['modal-pane']} ${isVisible && styles['show-modal']}`}>
             <div className={`${styles['modal-content']}`}>
                 <img src="https://cdn4.iconfinder.com/data/icons/avatar-circle-1-1/72/6-512.png" />
                 <div className={`${styles['modal-header']} ${styles['fixed-top']}`}>
@@ -101,6 +102,7 @@ Modal.propTypes = {
     intro: PropTypes.bool.isRequired,
     index: PropTypes.number.isRequired,
     setIndex: PropTypes.func.isRequired,
+    className: PropTypes.string,
     maxLength: PropTypes.number.isRequired,
     isVisible: PropTypes.bool.isRequired,
     onClose: PropTypes.func.isRequired

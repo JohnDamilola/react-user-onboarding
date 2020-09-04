@@ -9,33 +9,34 @@
 .bubble {
     width: 50px;
     height: 50px;
-    position: absolute;
-    bottom: 20px; 
-    left: 20px;
+    position: fixed;
+    bottom: 40px; 
+    left: 40px;
     background: #fff;
     border-radius: 50%;
     z-index: 999;
-    animation: fadeIn ease-in-out 0.65s;
+    animation: fadeIn ease-in-out 0.25s;
 }
 
 .tooltipContent {
     color: #212529;
     position: absolute;
     z-index: 1000;
-    left: 20;
-    bottom: 20;
+    left: 40px;
+    bottom: 40px;
     padding: 15px 25px;
     padding-bottom: 5px;
     font-size: 13px;
     width: 200px;
+    min-width: 250px;
     max-width: 300px;
     cursor: default;
-    border-radius: 3px;
+    border-radius: 8px;
     line-height: 20px;
     font-weight: 500;
     background-color: #fff;
     box-shadow: 0 0 0.3rem rgba(0, 0, 0, 0.16);
-    animation: fadeIn ease-in-out 0.65s;
+    animation: fadeIn ease-in-out 0.45s;
 }
 .tooltipContent.sm {
     max-width: 23rem;
@@ -49,15 +50,14 @@
     height: 0;
 }
 .top {
-    bottom: calc(100% - 5px);
-    left: 20px;
+    bottom: calc(100% + 15px);
+    left: 40px;
 }
 .top .arrow {
-    bottom: -8px;
-    left: calc(10px);
-    border-right: 10px solid transparent;
-    border-top: 10px solid #fff;
-    border-left: 10px solid transparent;
+    bottom: -15px;
+    left: calc(40px);
+    border-right: 20px solid transparent;
+    border-top: 20px solid #fff;
 }
 .right .arrow, .left .arrow, .center .arrow {
     border-top: 10px solid transparent;

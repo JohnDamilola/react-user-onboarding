@@ -74,7 +74,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
         current.style.zIndex = 0;
     }
 
-    const computePosition = (elementDimensions) => {
+    const computePosition = () => {
         const { left, right, bottom, top } = getElemDistance(current) || [];
         const { scrollWidth: bodyScrollWidth, scrollHeight: bodyScrollHeight } = document.body;
 
@@ -82,14 +82,11 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
 
         let position;
 
-        console.log(bodyScrollWidth, right, tooltipWidth, elementDimensions.right)
-
         const cond1 = bodyScrollWidth < right + tooltipWidth;
         const cond2 = bodyScrollHeight < bottom + tooltipHeight;
         const cond3 = left < tooltipWidth;
         const cond4 = top < tooltipHeight;
 
-        console.log(cond1, cond2, cond3, cond4)
         if ((cond3 && !cond1) || !cond1) {
             position = 'right';
         } else if (cond1 && !cond3) {
@@ -104,40 +101,87 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
             position = 'center'
         }
 
-        console.log(position)
-
         return position;
     }
 
     const generateTooltipStyle = (elementDimensions) => {
         const { width, height } = elementDimensions || [];
-        const { top, left } = getElemDistance(current) || [];
-        const position = computePosition(elementDimensions);
+        let { top, left, bottom } = getElemDistance(current) || [];
+        const position = computePosition();
+        const viewPortHeight = document.documentElement.clientHeight;
+
+        // if (viewPortHeight < top) {
+        //     top = viewPortHeight - (bottom - top);
+        // }
 
         return [{
             position: 'absolute', background: 'transparent', left: `${left}px`, width: `${width}px`, height: `${height}px`, top: `${top}px`, opacity: 1
         }, position]
     }
 
+    const isInViewport = (element) => {
+        const rect = element.getBoundingClientRect();
+        return (
+            rect.top >= 0 &&
+            rect.left >= 0 &&
+            rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+            rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+        );
+    }
+
+    const scrollToRef = (current) => {
+        const { top } = getElemDistance(current);
+        const viewPortHeight = document.documentElement.clientHeight;
+        
+        if (!isInViewport(current)) {
+            // if (top > viewPortHeight) {
+            //     window.scrollTo(0, viewPortHeight)
+            // } else {
+            // }
+            window.scrollTo(0, top)
+            
+        }
+    }   
+
     const { ref: { current } } = selectedData;
 
     const reCalculateDimensions = useCallback(() => {
         const dimensions = current && current.getBoundingClientRect();
         setElementDimensions(dimensions)
+
+        // scrollToRef(current);
+        // const [style, tooltipPosition] = elementDimensions 
+        //     ? generateTooltipStyle(elementDimensions) 
+        //     : [];
+        // setTooltipStyles([style, tooltipPosition])
     });
     
     useEffect(() => {
+        let body = document.body, 
+            html = document.documentElement;
+
+        let fullDocumentHeight = Math.max( body.scrollHeight, body.offsetHeight, 
+            html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+        let fullDocumentWidth = Math.max( body.scrollWidth, body.offsetWidth, 
+            html.clientWidth, html.scrollWidth, html.offsetWidth );
+
+        console.log( body.scrollWidth, body.offsetWidth, 
+            html.clientWidth, html.scrollWidth, html.offsetWidth )
+
         if (isInRange(index)) {
             current.style.zIndex = 999;
             var existingOverlays = document.getElementsByTagName("section");
             var overlay;
             if (existingOverlays.length === 0 && !hasRemovedOverlay) {
                 overlay = document.createElement("section");
+                overlay.style.overflow = 'scroll';
                 overlay.style.width = document.body.scrollWidth + 'px';
-                overlay.style.height = document.body.scrollHeight + 'px';
+                overlay.style.height = fullDocumentHeight + 'px';
                 document.body.prepend(overlay);
             }
             calculateDimensions();
+            scrollToRef(current);
         }
     }, [index])
 
@@ -165,11 +209,12 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
 
     useEffect(() => {
         const [style, tooltipPosition] = elementDimensions ? generateTooltipStyle(elementDimensions) : [];
+        console.log("I got here")
         setTooltipStyles([style, tooltipPosition])
     }, [elementDimensions])
 
     const [style, tooltipPosition] = tooltipStyles;
-    // const [style, tooltipPosition] = elementDimensions ? generateTooltipStyle(elementDimensions) : [];
+    console.log(tooltipStyles);
     return (
         <div className={styles.container}
             data-testid="tooltip"

@@ -5,7 +5,6 @@ import Tooltip from './components/Tooltip';
 import SpeechBubble from './components/SpeechBubble';
 /*
 * TODO:
-* Speech bubble
 * alleventlisteners on the highlighted node
 */
 
@@ -41,12 +40,13 @@ const UserOnboarding = ({ story, isVisible, onClose }) => {
       {
         selectedData.component === 'modal'
           ? <Modal
-            intro={selectedData.intro || false}
             index={index}
+            onClose={onClose}
+            isVisible={visible}
             setIndex={setIndex}
             maxLength={story.length}
-            isVisible={visible}
-            onClose={onClose}>
+            className={selectedData.className}
+            intro={selectedData.intro || false}>
             {selectedData.children}
           </Modal>
           : selectedData.component === 'tooltip'
@@ -56,14 +56,15 @@ const UserOnboarding = ({ story, isVisible, onClose }) => {
               setIndex={setIndex}
               maxLength={story.length}
               isVisible={visible}
+              className={selectedData.className}
               onClose={onClose}
               title={selectedData.children} />
             : selectedData.component === 'speech-bubble'
             ? <SpeechBubble
               index={index}
-              selectedData={selectedData}
               setIndex={setIndex}
               maxLength={story.length}
+              className={selectedData.className}
               isVisible={visible}
               onClose={onClose}
               title={selectedData.children} />

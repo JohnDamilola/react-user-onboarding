@@ -49,15 +49,12 @@ const App = () => {
       deadline: "July 28th"
     }
   ]
-  const elem1 = useRef();
-  const elem2 = useRef();
-  const elem3 = useRef();
-  const elem4 = useRef();
-  const elem5 = useRef();
+  const elem1 = useRef(), elem2 = useRef(), elem3 = useRef(), elem4 = useRef(), elem5 = useRef();
   const story = [
     {
       component: 'modal',
       intro: true,
+      className: 'hello',
       children: (
         <div>
           <p>Hi <b>Damilola</b> <span role="img" aria-label="hello">👋</span></p>
@@ -88,10 +85,9 @@ const App = () => {
     },
     {
       component: 'speech-bubble',
-      ref: elem2,
       children: (
         <div>
-          <p>Click on this space to show only "Important & Urgent" tasks.</p>
+          <p>This is a speech bubble, you can add more information here.</p>
         </div>
       )
     },
@@ -138,89 +134,93 @@ const App = () => {
     }
   ]
   return (
-    <div className="app-container">
-      <div className="intro">
+    <div className="app-container row">
+      <div className="intro col-md-12 col-lg-4">
         <div>
-          <h2>Hello Damilola! <span role="img" aria-label="hello">👋</span></h2>
+          <h2>Hello, Damilola! <span role="img" aria-label="hello">👋</span></h2>
           <h1>Get your priorities right with too-doo!</h1>
           <p>The most effective to-do app you'll ever need. Inspired by Eisenhower.
             </p>
           <button className="button-start" onClick={() => setIsVisible(true)}>Quick Onboarding Tour</button>
         </div>
       </div>
-      <div className="apps">
-        <div className="col-1 app-left" ref={elem1}>
-          <form>
-            <input placeholder="Search today tasks" />
-          </form>
-          <h2>What <u>today</u> is like for you.</h2>
-          <div className="todo-list">
-            <p>URGENT & IMPORTANT</p>
-            {
-              todayTasks1.map(({ title, urgency }, i) => {
-                return (
-                  <div className={`todo-list-item urgency${urgency}`} key={i}>
-                    <p>{title}</p>
-                  </div>
-                )
-              })
-            }
-            <p>IMPORTANT</p>
-            {
-              todayTasks2.map(({ title, urgency }, i) => {
-                return (
-                  <div className={`todo-list-item urgency${urgency}`} key={i}>
-                    <p>{title}</p>
-                  </div>
-                )
-              })
-            }
-            <p>URGENT</p>
-            {
-              todayTasks3.map(({ title, urgency }, i) => {
-                return (
-                  <div className={`todo-list-item urgency${urgency}`} key={i}>
-                    <p>{title}</p>
-                  </div>
-                )
-              })
-            }
-            <p>NOT URGENT & NOT IMPORTANT</p>
-            {
-              todayTasks4.map(({ title, urgency }, i) => {
-                return (
-                  <div className={`todo-list-item urgency${urgency}`} key={i}>
-                    <p>{title}</p>
-                  </div>
-                )
-              })
-            }
+      <div className="appss col-md-12 col-lg-8 p-0s">
+        <div className="row">
+          <div className="col-md-6 app-right p-0">
+            <div className="row-3">
+              <div className="col-8 bg-pink box" ref={elem2}>
+                <h1>02</h1>
+                <p>Important And Urgent</p>
+              </div>
+              <div className="col-4 bg-yellow box" ref={elem3}>
+                <p className="small rotate-90"><span className="bigger">05</span> Important but Not Urgent</p>
+              </div>
+            </div>
+            <div className="row-1">
+              <div className="col bg-green box" ref={elem4}>
+                <p className="small">Not Important and Urgent</p>
+                <p className="small">02</p>
+              </div>
+              <div className="col bg-blue box" ref={elem5}>
+                <p className="small">Not Important and Not Urgent</p>
+                <p className="small">02</p>
+              </div>
+              <button className="btn-fab" ref={elem2}>
+                <img alt="btn-plus" src={require('./img/plus.svg')} />
+              </button>
+            </div>
+          </div>
+
+          <div className="col-md-6 app-left p-0s" ref={elem1}>
+            <form>
+              <input placeholder="Search today tasks" />
+            </form>
+            <h2>What <u>today</u> is like for you.</h2>
+            <div className="todo-list">
+              <p>URGENT & IMPORTANT</p>
+              {
+                todayTasks1.map(({ title, urgency }, i) => {
+                  return (
+                    <div className={`todo-list-item urgency${urgency}`} key={i}>
+                      <p>{title}</p>
+                    </div>
+                  )
+                })
+              }
+              <p>IMPORTANT</p>
+              {
+                todayTasks2.map(({ title, urgency }, i) => {
+                  return (
+                    <div className={`todo-list-item urgency${urgency}`} key={i}>
+                      <p>{title}</p>
+                    </div>
+                  )
+                })
+              }
+              <p>URGENT</p>
+              {
+                todayTasks3.map(({ title, urgency }, i) => {
+                  return (
+                    <div className={`todo-list-item urgency${urgency}`} key={i}>
+                      <p>{title}</p>
+                    </div>
+                  )
+                })
+              }
+              <p>NOT URGENT & NOT IMPORTANT</p>
+              {
+                todayTasks4.map(({ title, urgency }, i) => {
+                  return (
+                    <div className={`todo-list-item urgency${urgency}`} key={i}>
+                      <p>{title}</p>
+                    </div>
+                  )
+                })
+              }
+            </div>
           </div>
         </div>
-        <div className="col-1 app-right">
-          <div className="row-3">
-            <div className="col-5 bg-pink box" ref={elem2}>
-              <h1>02</h1>
-              <p>Important And Urgent</p>
-            </div>
-            <div className="col-1 bg-yellow box" ref={elem3}>
-              <p className="small rotate-90"><span className="bigger">05</span> Important but Not Urgent</p>
-            </div>
-          </div>
-          <div className="row-1">
-            <div className="col-1 bg-green box" ref={elem4}>
-              <p className="small">Not Important and Urgent</p>
-              <p className="small">02</p>
-            </div>
-            <div className="col-1 bg-blue box" ref={elem5}>
-              <p className="small">Not Important and Not Urgent</p>
-              <p className="small">02</p>
-            </div>
-            <button className="btn-fab" ref={elem2}>
-              <img alt="btn-plus" src={require('./img/plus.svg')} />
-            </button>
-          </div>
-        </div>
+        
       </div>
       <UserOnboarding
         story={story}
