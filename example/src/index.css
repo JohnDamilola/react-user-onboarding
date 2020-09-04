@@ -14,17 +14,22 @@ code {
 .button-start {
   margin: 0px;
   padding: 15px 20px;
-  color: #4e4376;
+  color: #333;
   background: #fff;
   border: none;
   border-radius: 6px;
   font-size: 14px;
   font-weight: 700;
   cursor: pointer;
+  margin-bottom: 100px;
 }
 
 button:focus {
   outline: none;
+}
+
+.hello p {
+  /* font-size: 30px; */
 }
 
 p {
@@ -32,17 +37,21 @@ p {
 }
 
 .app-container {
-  /* background-color: #191919; */
-  background: #2b5876;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to right, #4e4376, #2b5876);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to right, #4e4376, #2b5876); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-  height: 100vh;
+  background: #0e4869;
+  margin: 0px;
+  min-height: 100vh;
+  /* height: 2000px; */
   padding: 0px 80px;
   display: flex;
   overflow: scroll;
   align-items: center;
   justify-content: space-between;
+}
+
+@media (max-width: 670px) {
+  .app-container {
+    padding: 0px 40px; 
+  }
 }
 
 .intro {
@@ -51,10 +60,32 @@ p {
   margin-right: 40px;
 }
 
+.intro h2 {
+  font-size: 20px;
+  line-height: 30px;
+  margin: 10px 0px;
+}
+
 .intro h1 {
-  font-size: 50px;
+  font-size: 40px;
   line-height: 50px;
-  margin: 20px 0px;
+  font-weight: 700;
+  margin: 10px 0px;
+}
+
+@media (max-width: 670px) {
+  .intro h2 {
+    font-size: 10px;
+    line-height: 50px;
+    margin: 20px 0px;
+  }
+  
+  .intro h1 {
+    font-size: 30px;
+    line-height: 35px;
+    font-weight: 500;
+    margin: 20px 0px;
+  }
 }
 
 .intro p {
@@ -68,7 +99,7 @@ p {
 
 .apps {
   display: flex;
-  flex: 70%;
+  /* flex: 70%; */
   background: #fff;
   flex-direction: row-reverse;
   border-radius: 10px;
@@ -97,6 +128,10 @@ p {
   overflow: scroll;
 }
 
+/* .no-padding {
+  padding-block: ;
+} */
+
 .box {
   padding: 20px;
   border: 2px solid #fff;
@@ -109,7 +144,7 @@ h1, h2, h3, p {
 }
 
 .bg-pink {
-  background: #DD2476;
+  background: #941143;
   color: #fff;
   border-right: 0px;
   border-bottom: 0px;
@@ -123,19 +158,19 @@ h1, h2, h3, p {
 }
 
 .bg-pink p {
-  font-size: 30px;
+  font-size: 20px;
   line-height: 30px;
 }
 
 .bg-yellow {
   display: flex;
-  background: #11a3cf;
+  background: #0e4869;
   justify-content: center;
   border-bottom: 0px;
 }
 
 .bg-green {
-  background: #42b127;
+  background: #2ca30f;
   display: flex;
   border-right: 0px;
   flex-direction: column;
@@ -189,11 +224,14 @@ p.small {
 
 form {
   /* padding: 20px; */
+  position: relative;
 }
 
 input {
   height: 40px;
   width: 100%;
+  position: relative;
+  font-size: 14px;
   width: -webkit-fill-available;
   margin-bottom: 20px;
   border-radius: 8px;

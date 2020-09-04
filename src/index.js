@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Modal from './components/Modal';
 import PropTypes from 'prop-types';
 import Tooltip from './components/Tooltip';
+import SpeechBubble from './components/SpeechBubble';
 /*
 * TODO:
-* Speech bubble
 * alleventlisteners on the highlighted node
 */
 
@@ -22,21 +22,31 @@ const UserOnboarding = ({ story, isVisible, onClose }) => {
 
   useEffect(() => {
     setVisible(isVisible);
+    if (!isVisible) {
+      removeOverlay();
+    }
   }, [isVisible])
 
-  const selectedData = story[index];
+  const removeOverlay = () => {
+    var overlays = document.getElementsByTagName("section");
+    for (let overlay of overlays) {
+        document.body.removeChild(overlay)
+    }
+  }
 
+  const selectedData = story[index];
   return visible ? (
     <div>
       {
         selectedData.component === 'modal'
           ? <Modal
-            intro={selectedData.intro || false}
             index={index}
+            onClose={onClose}
+            isVisible={visible}
             setIndex={setIndex}
             maxLength={story.length}
-            isVisible={visible}
-            onClose={onClose}>
+            className={selectedData.className}
+            intro={selectedData.intro || false}>
             {selectedData.children}
           </Modal>
           : selectedData.component === 'tooltip'
@@ -45,6 +55,16 @@ const UserOnboarding = ({ story, isVisible, onClose }) => {
               selectedData={selectedData}
               setIndex={setIndex}
               maxLength={story.length}
+              isVisible={visible}
+              className={selectedData.className}
+              onClose={onClose}
+              title={selectedData.children} />
+            : selectedData.component === 'speech-bubble'
+            ? <SpeechBubble
+              index={index}
+              setIndex={setIndex}
+              maxLength={story.length}
+              className={selectedData.className}
               isVisible={visible}
               onClose={onClose}
               title={selectedData.children} />
