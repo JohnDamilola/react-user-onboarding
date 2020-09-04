@@ -43,7 +43,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
     }
 
     const prev = () => {
-        current.style.zIndex = 0;
+        current.style.removeProperty('z-index')
         if (isInRange(index - 1)) {
             setIndex(index - 1);
         } else {
@@ -52,7 +52,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
     }
 
     const next = () => {
-        current.style.zIndex = 0;
+        current.style.removeProperty('z-index')
         if (isInRange(index + 1)) {
             setIndex(index + 1);
         } else {
@@ -87,14 +87,16 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
         const cond3 = left < tooltipWidth;
         const cond4 = top < tooltipHeight;
 
-        if ((cond3 && !cond1) || !cond1) {
+        console.log(cond1, cond2, cond3, cond4);
+
+        if (!cond2) {
+            position = 'bottom';
+        } else if ((cond3 && !cond1) || !cond1) {
             position = 'right';
         } else if (cond1 && !cond3) {
             position = 'left';
         } else if (cond2 && !cond4) {
             position = 'top';
-        } else if (cond4 && !cond2) {
-            position = 'bottom';
         } else if (cond1 && !cond2 && !cond3 && !cond4) {
             position = 'center';
         } else {
@@ -130,16 +132,14 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
     }
 
     const scrollToRef = (current) => {
-        const { top } = getElemDistance(current);
-        const viewPortHeight = document.documentElement.clientHeight;
+        const { top: elemTop } = getElemDistance(current);
+        const { height } = tooltipNodeRef.current.getBoundingClientRect() || [];
+
+        
+        const tooltipTop = parseInt(elemTop - height);
         
         if (!isInViewport(current)) {
-            // if (top > viewPortHeight) {
-            //     window.scrollTo(0, viewPortHeight)
-            // } else {
-            // }
-            window.scrollTo(0, top)
-            
+            window.scrollTo(0, tooltipTop)
         }
     }   
 
@@ -166,8 +166,8 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
         let fullDocumentWidth = Math.max( body.scrollWidth, body.offsetWidth, 
             html.clientWidth, html.scrollWidth, html.offsetWidth );
 
-        console.log( body.scrollWidth, body.offsetWidth, 
-            html.clientWidth, html.scrollWidth, html.offsetWidth )
+        // console.log( body.scrollWidth, body.offsetWidth, 
+            // html.clientWidth, html.scrollWidth, html.offsetWidth )
 
         if (isInRange(index)) {
             current.style.zIndex = 999;
@@ -181,7 +181,7 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
                 document.body.prepend(overlay);
             }
             calculateDimensions();
-            scrollToRef(current);
+            // scrollToRef(current);
         }
     }, [index])
 
@@ -190,13 +190,13 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
         const { keyCode } = e;
 
         if ([38, 39].includes(keyCode)) { // up and right arrow keys
-            console.log("Forward Keys");
+            // console.log("Forward Keys");
             next();
         } else if ([40, 37].includes(keyCode)) { // down and left arrow keys
-            console.log("Back Keys");
+            // console.log("Back Keys");
             prev();
         } else if (keyCode === 27) { // escape key
-            console.log("Cancel Keys");
+            // console.log("Cancel Keys");
             removeOverlay();
             setHasRemovedOverlay(true)
             onCloseAndReset();
@@ -209,12 +209,12 @@ const Tooltip = ({ index, setIndex, selectedData, maxLength, title, isVisible, o
 
     useEffect(() => {
         const [style, tooltipPosition] = elementDimensions ? generateTooltipStyle(elementDimensions) : [];
-        console.log("I got here")
         setTooltipStyles([style, tooltipPosition])
+        scrollToRef(current);
     }, [elementDimensions])
 
     const [style, tooltipPosition] = tooltipStyles;
-    console.log(tooltipStyles);
+    // console.log(tooltipStyles);
     return (
         <div className={styles.container}
             data-testid="tooltip"

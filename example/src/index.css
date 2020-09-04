@@ -14,7 +14,7 @@ code {
 .button-start {
   margin: 0px;
   padding: 15px 20px;
-  color: #4e4376;
+  color: #333;
   background: #fff;
   border: none;
   border-radius: 6px;
@@ -29,7 +29,7 @@ button:focus {
 }
 
 .hello p {
-  font-size: 30px;
+  /* font-size: 30px; */
 }
 
 p {
@@ -39,7 +39,7 @@ p {
 .app-container {
   background: #0e4869;
   margin: 0px;
-  /* height: 100vh; */
+  min-height: 100vh;
   /* height: 2000px; */
   padding: 0px 80px;
   display: flex;
@@ -62,14 +62,30 @@ p {
 
 .intro h2 {
   font-size: 20px;
-  line-height: 50px;
-  margin: 20px 0px;
+  line-height: 30px;
+  margin: 10px 0px;
 }
 
 .intro h1 {
-  font-size: 50px;
+  font-size: 40px;
   line-height: 50px;
-  margin: 20px 0px;
+  font-weight: 700;
+  margin: 10px 0px;
+}
+
+@media (max-width: 670px) {
+  .intro h2 {
+    font-size: 10px;
+    line-height: 50px;
+    margin: 20px 0px;
+  }
+  
+  .intro h1 {
+    font-size: 30px;
+    line-height: 35px;
+    font-weight: 500;
+    margin: 20px 0px;
+  }
 }
 
 .intro p {
@@ -208,11 +224,14 @@ p.small {
 
 form {
   /* padding: 20px; */
+  position: relative;
 }
 
 input {
   height: 40px;
   width: 100%;
+  position: relative;
+  font-size: 14px;
   width: -webkit-fill-available;
   margin-bottom: 20px;
   border-radius: 8px;

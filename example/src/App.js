@@ -49,7 +49,7 @@ const App = () => {
       deadline: "July 28th"
     }
   ]
-  const elem1 = useRef(), elem2 = useRef(), elem3 = useRef(), elem4 = useRef(), elem5 = useRef();
+  const elem1 = useRef(), elem2 = useRef(), elem3 = useRef(), elem4 = useRef(), elem5 = useRef(), elem6 = useRef();
   const story = [
     {
       component: 'modal',
@@ -57,11 +57,11 @@ const App = () => {
       className: 'hello',
       children: (
         <div>
-          <p>Hi <b>Damilola</b> <span role="img" aria-label="hello">👋</span></p>
+          <p><b>Hi there</b> <span role="img" aria-label="hello">👋</span></p>
 
           <p>Welcome to React User Onboarding Demo App. This is a sample illustration of how the library can be implemented in your existing web apps.</p>
 
-          <p>Would you like to have a tour to see how it works? (If you skip, you can click the "show tour" button to get started again)</p>
+          <p>Would you like to have a tour to see how it works? (If you skip, you can click the "Quick Onboarding Tour" button to get started again)</p>
         </div>
       )
     },
@@ -70,7 +70,7 @@ const App = () => {
       ref: elem1,
       children: (
         <div>
-          <p>Click on this button to add a task</p>
+          <p>This shows the list of all the tasks you have added</p>
         </div>
       )
     },
@@ -79,15 +79,7 @@ const App = () => {
       ref: elem2,
       children: (
         <div>
-          <p>Click on this space to show only "Important & Urgent" tasks.</p>
-        </div>
-      )
-    },
-    {
-      component: 'speech-bubble',
-      children: (
-        <div>
-          <p>This is a speech bubble, you can add more information here.</p>
+          <p>Enter a keyword to search the tasks you have added already.</p>
         </div>
       )
     },
@@ -96,7 +88,15 @@ const App = () => {
       ref: elem3,
       children: (
         <div>
-          <p>Click on this space to show only "Important" tasks.</p>
+          <p>Click to add more tasks.</p>
+        </div>
+      )
+    },
+    {
+      component: 'speech-bubble',
+      children: (
+        <div>
+          <p>This is a speech bubble, you can add more information or guide instruction or explanation here.</p>
         </div>
       )
     },
@@ -105,13 +105,22 @@ const App = () => {
       ref: elem4,
       children: (
         <div>
-          <p>Click on this space to show only "Urgent" tasks.</p>
+          <p>Click on this space to show only "Important" tasks.</p>
         </div>
       )
     },
     {
       component: 'tooltip',
       ref: elem5,
+      children: (
+        <div>
+          <p>Click on this space to show only "Urgent" tasks.</p>
+        </div>
+      )
+    },
+    {
+      component: 'tooltip',
+      ref: elem6,
       children: (
         <div>
           <p>Click on this space to show only "Not Important & Not Urgent" tasks.</p>
@@ -137,7 +146,7 @@ const App = () => {
     <div className="app-container row">
       <div className="intro col-md-12 col-lg-4">
         <div>
-          <h2>Hello, Damilola! <span role="img" aria-label="hello">👋</span></h2>
+          <h2>Hello there! <span role="img" aria-label="hello">👋</span></h2>
           <h1>Get your priorities right with too-doo!</h1>
           <p>The most effective to-do app you'll ever need. Inspired by Eisenhower.
             </p>
@@ -152,20 +161,20 @@ const App = () => {
                 <h1>02</h1>
                 <p>Important And Urgent</p>
               </div>
-              <div className="col-4 bg-yellow box" ref={elem3}>
+              <div className="col-4 bg-yellow box" ref={elem4}>
                 <p className="small rotate-90"><span className="bigger">05</span> Important but Not Urgent</p>
               </div>
             </div>
             <div className="row-1">
-              <div className="col bg-green box" ref={elem4}>
+              <div className="col bg-green box" ref={elem5}>
                 <p className="small">Not Important and Urgent</p>
                 <p className="small">02</p>
               </div>
-              <div className="col bg-blue box" ref={elem5}>
+              <div className="col bg-blue box" ref={elem6}>
                 <p className="small">Not Important and Not Urgent</p>
                 <p className="small">02</p>
               </div>
-              <button className="btn-fab" ref={elem2}>
+              <button className="btn-fab" ref={elem3}>
                 <img alt="btn-plus" src={require('./img/plus.svg')} />
               </button>
             </div>
@@ -173,9 +182,9 @@ const App = () => {
 
           <div className="col-md-6 app-left p-0s" ref={elem1}>
             <form>
-              <input placeholder="Search today tasks" />
+              <input placeholder="Search today tasks" ref={elem2} />
             </form>
-            <h2>What <u>today</u> is like for you.</h2>
+            <h4>What <u>today</u> is like for you.</h4>
             <div className="todo-list">
               <p>URGENT & IMPORTANT</p>
               {
