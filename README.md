@@ -24,9 +24,10 @@ yarn add react-user-onboarding
 ```jsx
 import React, { Component } from 'react'
 
-import { UserOnboarding } from 'react-user-onboarding'
+import UserOnboarding from 'react-user-onboarding'
 import 'react-user-onboarding/dist/index.css'
 
+const tooltip1 = useRef();
 const story = [
   {
     component: 'modal',
@@ -37,7 +38,7 @@ const story = [
   },
   {
     component: 'tooltip',
-    ref: elem1,
+    ref: tooltip1,
     children: (
       // Html component for tooltip goes here
     )
@@ -80,12 +81,13 @@ const Example = () => {
 
 #### Story Object
 
-|Name     |Description                                      |Type     |Default       |
+|Name     |Description                                      |Type     |Component       |
 |---------|-------------------------------------------------|---------|--------------|
-|component|indicate the type of component (modal, tooltip)  |string   |modal, tooltip|
+|component|indicate the type of component (modal, tooltip, speech-bubble)  |string   |modal, tooltip, speech-bubble|
 |intro    |value to indicate the first onboarding step      |boolean  |modal         |
 |ref      |ref to store the target node for the tooltip     |React Ref|tooltip       |
-|children |the html content of the modals and the tooltips  |ReactNode|modal, tooltip|
+|children |the html content of the modals, tooltips and speech bubble |ReactNode|modal, tooltip|
+|className|a css class name to style the modals, tooltips and speech bubble |string|modal, tooltip, speech-bubble|
 
 **Modal Object Example**
 ```jsx
@@ -99,6 +101,14 @@ const Example = () => {
 ```jsx
     {
         component: 'tooltip',
+        ref: loginFormRef,
+        children: (<div>tooltip content goes here</div>)
+    }
+```
+**Speech Bubble Object Example**
+```jsx
+    {
+        component: 'speech-bubble',
         ref: loginFormRef,
         children: (<div>tooltip content goes here</div>)
     }
