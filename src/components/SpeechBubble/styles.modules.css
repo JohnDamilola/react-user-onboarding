@@ -146,6 +146,14 @@ button:focus {
     z-index: 999;
 }
 
+.cancel {
+    text-align: right;
+}
+.cancel img {
+    width: 17px;
+    cursor: pointer;
+}
+
 section {
     background: #00000085;
     z-index: 1;

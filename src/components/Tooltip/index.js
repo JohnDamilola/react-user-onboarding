@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import useEventListener from './../../hooks/use-event-listener'
 import styles from './styles.modules.css'
 import getElemDistance from '../../utils/element-distance'
+import CancelIcon from '../../assets/img/cancel.svg'
 
 /**
  * The tooltip component of the onboarding flow
@@ -264,6 +265,9 @@ const Tooltip = ({
           className={`${styles.tooltipContent} ${styles[tooltipPosition]}`}
           data-testid='tooltip-content'
         >
+          <div className={styles.cancel}>
+            <img src={CancelIcon} alt='cancel' onClick={onClose} />
+          </div>
           <span className={styles.arrow} />
           {title}
           <div className={styles['align-center']}>

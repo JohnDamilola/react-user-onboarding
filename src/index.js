@@ -14,9 +14,10 @@ import SpeechBubble from './components/SpeechBubble'
  * @param {array} props.story the story array for the onboarding flow
  * @param {bool} props.isVisible value used to toggle the component's visibility
  * @param {function} props.onClose function to close the component
+ * @param {number} props.initialPosition to jump to a specific story point
  * @returns {JSX.Element} Component template
  */
-const UserOnboarding = ({ story, isVisible, onClose }) => {
+const UserOnboarding = ({ story, isVisible, onClose, initialPosition }) => {
   const [index, setIndex] = useState(0)
   const [visible, setVisible] = useState(false)
 
@@ -26,6 +27,12 @@ const UserOnboarding = ({ story, isVisible, onClose }) => {
       removeOverlay()
     }
   }, [isVisible])
+
+  useEffect(() => {
+    if (initialPosition) {
+      setIndex(initialPosition)
+    }
+  }, [initialPosition])
 
   const removeOverlay = () => {
     var overlays = document.getElementsByTagName('section')
@@ -78,11 +85,13 @@ const UserOnboarding = ({ story, isVisible, onClose }) => {
 UserOnboarding.propTypes = {
   story: PropTypes.array.isRequired,
   isVisible: PropTypes.bool.isRequired,
-  onClose: PropTypes.func.isRequired
+  onClose: PropTypes.func.isRequired,
+  initialPosition: PropTypes.number
 }
 
 UserOnboarding.defaultProps = {
-  isVisible: false
+  isVisible: false,
+  initialPosition: 0
 }
 
 export default UserOnboarding

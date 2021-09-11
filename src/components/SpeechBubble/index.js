@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import useEventListener from './../../hooks/use-event-listener'
 import styles from './styles.modules.css'
 import getElemDistance from '../../utils/element-distance'
+import CancelIcon from '../../assets/img/cancel.svg'
 
 /**
  * The SpeechBubble component of the onboarding flow
@@ -149,6 +150,9 @@ const SpeechBubble = ({
           className={`${styles.tooltipContent} ${styles['top']}`}
           data-testid='tooltip-content'
         >
+          <div className={styles.cancel}>
+            <img src={CancelIcon} alt='cancel' onClick={onClose} />
+          </div>
           <span className={styles.arrow} />
           {title}
           <div className={styles['align-center']}>

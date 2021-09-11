@@ -29,6 +29,13 @@
 .tooltipContent.md {
     max-width: 40rem;
 }
+.cancel {
+    text-align: right;
+}
+.cancel img {
+    width: 17px;
+    cursor: pointer;
+}
 .arrow {
     position: absolute;
     width: 0;

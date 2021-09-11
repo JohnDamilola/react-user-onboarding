@@ -63,7 +63,7 @@ const Example = () => {
     <div>
       <UserOnboarding 
         story={story} 
-        isVisible={isVisible} 
+        isVisible={isVisible}
         onClose={() => setIsVisible(false)} 
       />
     </div>
@@ -77,6 +77,7 @@ const Example = () => {
 |---------|-----------------------------------------------|------------------------------|-------|
 |story    |the story object for the onboarding flow       |array<[object](https://johndamilola.github.io/react-user-onboarding#story-object)>|       |
 |isVisible|value used to toggle the component's visibility|boolean                       |false  |
+|initialPosition|value used to jump to a specific story point|number                       |0  |
 |onClose  |function to close the component                |function                      |       |
 
 #### Story Object
